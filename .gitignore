@@ -33,3 +33,9 @@ training_data.csv
 candidates.db
 reports/
 *.pkl
+
+# Logs and errors
+*.log
+logs.txt
+push_error.txt
+test_results.log
