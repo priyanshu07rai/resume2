@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortlist • The Honest Recruiter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --surface: rgba(17, 24, 39, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --risk-low: #10b981;
+            --risk-moderate: #f59e0b;
+            --risk-elevated: #ef4444;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 50%);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        select {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            border: 1px solid var(--border);
+            font-family: var(--font-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:disabled,
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .glass-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .domain-tag {
+            background: rgba(129, 140, 248, 0.1);
+            color: #818cf8;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+        }
+
+        .score-box {
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        .risk-badge {
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .risk-low {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--risk-low);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .risk-moderate {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--risk-moderate);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .risk-high {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--risk-elevated);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .text-risk-low {
+            color: var(--risk-low);
+        }
+
+        .text-risk-moderate {
+            color: var(--risk-moderate);
+        }
+
+        .text-risk-high {
+            color: var(--risk-elevated);
+        }
+
+        .hash-mono {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: #475569;
+        }
+
+        .insight-list {
+            list-style: none;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+
+        .insight-list li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .insight-list li::before {
+            content: "•";
+            color: var(--accent);
+        }
+
+        /* Checkbox Styling */
+        .cb-container {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .cb-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .cb-container:hover input~.checkmark {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .cb-container input:checked~.checkmark {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .cb-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .cb-container .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid #000;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>Candidate Shortlist</h1>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px;">
+                    Ranked automatically based on forensic reliability vs. fraud risk.
+                </div>
+            </div>
+            <div class="header-actions">
+                <select id="role-filter">
+                    <option value="All">All Domains</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Sales">Sales & Marketing</option>
+                </select>
+                <a href="/" class="btn-secondary">Upload More</a>
+                <button onclick="clearAllData()" class="btn-secondary" style="border-color: #ef4444; color: #ef4444;"
+                    title="Delete all resumes & reports">Clear Data</button>
+                <button id="compare-btn" class="btn-primary" disabled>Compare Selected (0)</button>
+            </div>
+        </header>
+
+        <div class="glass-card">
+            <table id="candidate-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px; text-align: center;"></th>
+                        <th>Name / Details</th>
+                        <th>Domain</th>
+                        <th>Reliability</th>
+                        <th>Risk Level</th>
+                        <th>Forensic Insights</th>
+                        <th>Hash ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows injected by Jinja or JS -->
+                    {% for cand in candidates %}
+                    <tr class="candidate-row" data-domain="{{ cand.domain }}">
+                        <td style="text-align: center;">
+                            <label class="cb-container">
+                                <input type="checkbox" class="candidate-cb" value="{{ cand.id }}"
+                                    onchange="handleSelection(this)">
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                        <td>
+                            <a href="/report/hash/{{ cand.hash }}" target="_blank"
+                                style="font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; border-bottom: 1px dashed var(--accent); transition: color 0.2s;"
+                                onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">{{
+                                cand.name }}</a>
+                            <div style="font-size: 0.8rem; color: var(--accent); margin-top: 4px;">Score: {{
+                                "%.1f"|format(cand.final_score) }}</div>
+                        </td>
+                        <td><span class="domain-tag">{{ cand.domain }}</span></td>
+                        <td
+                            class="score-box {{ 'text-risk-low' if cand.reliability >= 70 else 'text-risk-moderate' if cand.reliability >= 40 else 'text-risk-high' }}">
+                            {{ "%.0f"|format(cand.reliability) }}%</td>
+                        <td>
+                            <span class="risk-badge risk-{{ cand.risk | lower }}">{{ cand.risk }}</span>
+                        </td>
+                        <td>
+                            <ul class="insight-list">
+                                {% for insight in cand.insights %}
+                                <li>{{ insight }}</li>
+                                {% endfor %}
+                                {% if not cand.insights %}
+                                <li style="color:#64748b;font-style:italic;">No automated insights available.</li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td><span class="hash-mono">{{ cand.hash[:8] }}...</span></td>
+                    </tr>
+                    {% endfor %}
+                    {% if not candidates %}
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            No candidates found. Upload resumes to see them here.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Hidden form for Comparison Submission -->
+    <form id="compare-form" action="/compare" method="POST" style="display: none;">
+        <input type="hidden" name="candidate_1" id="c1_input">
+        <input type="hidden" name="candidate_2" id="c2_input">
+    </form>
+
+    <script>
+        const filterSelect = document.getElementById('role-filter');
+        const tableRows = document.querySelectorAll('.candidate-row');
+        const checkboxes = document.querySelectorAll('.candidate-cb');
+        const compareBtn = document.getElementById('compare-btn');
+
+        // Filtering Logic
+        filterSelect.addEventListener('change', (e) => {
+            const selected = e.target.value.toLowerCase();
+            tableRows.forEach(row => {
+                const domain = row.getAttribute('data-domain').toLowerCase();
+                if (selected === 'all' || domain.includes(selected)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Selection Logic for Compare
+        let selectedIds = [];
+        function handleSelection(cb) {
+            if (cb.checked) {
+                if (selectedIds.length >= 2) {
+                    // Prevent selecting more than 2
+                    cb.checked = false;
+                    alert('You can only select up to 2 candidates to compare at a time.');
+                    return;
+                }
+                selectedIds.push(cb.value);
+            } else {
+                selectedIds = selectedIds.filter(id => id !== cb.value);
+            }
+
+            compareBtn.textContent = `Compare Selected (${selectedIds.length})`;
+            compareBtn.disabled = selectedIds.length !== 2;
+        }
+
+        // Submit Compare
+        compareBtn.addEventListener('click', () => {
+            if (selectedIds.length === 2) {
+                document.getElementById('c1_input').value = selectedIds[0];
+                document.getElementById('c2_input').value = selectedIds[1];
+
+                // Show loading state on button
+                compareBtn.innerHTML = 'Connecting AI Engine...';
+                compareBtn.disabled = true;
+
+                document.getElementById('compare-form').submit();
+            }
+        });
+
+        // Clear All Data
+        function clearAllData() {
+            if (confirm("Are you sure you want to delete all candidates and their forensic reports? This action cannot be undone.")) {
+                fetch('/api/clear_all', { method: 'POST' })
+                    .then(r => r.json())
+                    .then(d => window.location.reload())
+                    .catch(err => alert("Error clearing data."));
+            }
+        }
+    </script>
+
+</body>
+
+</html>

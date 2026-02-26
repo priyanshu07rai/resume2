@@ -1,0 +1,11 @@
+flask
+pymupdf
+pdfplumber
+pdf2image
+pytesseract
+requests
+python-dotenv
+flask-cors
+groq
+pillow
+redis

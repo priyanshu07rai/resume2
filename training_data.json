@@ -1,0 +1,1915 @@
+[
+    {
+        "resume_id": "RES-2026-001",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Backend Engineer at CloudStream (2020-Present). Optimized microservices architecture using Go and Kafka, reducing latency by 35%. SKILLS: Go, Python, Kubernetes, AWS, PostgreSQL. EDUCATION: B.S. in Computer Science, Stanford University.",
+        "structured_claims": {
+            "name": "Alexander Wright",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Go",
+                "Kubernetes",
+                "Python"
+            ],
+            "current_title": "Senior Backend Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "awright-dev",
+            "repo_count": 42,
+            "account_created_year": 2018,
+            "last_commit_days_ago": 3,
+            "top_language": "Go"
+        },
+        "email": {
+            "address": "a.wright@stanford.alumni.edu",
+            "domain": "stanford.alumni.edu",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Profile is consistent. GitHub account age and top language align with claimed professional experience and skills."
+        }
+    },
+    {
+        "resume_id": "RES-2026-002",
+        "category": "tech",
+        "resume_text": "SUMMARY: Expert AI/ML Researcher with 10 years of experience in Deep Learning and Neural Networks. Developed proprietary LLM frameworks for enterprise scale. PROJECTS: Led 'NeuralNetX', a generative AI tool for medical imaging.",
+        "structured_claims": {
+            "name": "Sarah Jenkins",
+            "claimed_years_experience": 10,
+            "skills": [
+                "PyTorch",
+                "TensorFlow",
+                "Deep Learning"
+            ],
+            "current_title": "Principal AI Researcher"
+        },
+        "digital_footprint": {
+            "github_username": "sarahj_codes",
+            "repo_count": 2,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 15,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "sarah.jenkins.ai@gmail.com",
+            "domain": "gmail.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Major discrepancy: Claims 10 years of AI expertise, but GitHub account is <1 year old with only 2 repositories. Top language (HTML) does not match claimed skills (PyTorch/TensorFlow)."
+        }
+    },
+    {
+        "resume_id": "RES-2026-003",
+        "category": "business",
+        "resume_text": "EXPERIENCE: Project Manager at Global Logistics Inc. (2018-2023). Managed $2M budget and improved supply chain efficiency by 15%. SKILLS: Agile, Scrum, Jira, PMP Certified.",
+        "structured_claims": {
+            "name": "David Miller",
+            "claimed_years_experience": 5,
+            "skills": [
+                "Agile",
+                "Project Management",
+                "Jira"
+            ],
+            "current_title": "Project Manager"
+        },
+        "digital_footprint": {
+            "github_username": "CyberGhost_99",
+            "repo_count": 5,
+            "account_created_year": 2019,
+            "last_commit_days_ago": 200,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "dmiller@logistics-global.com",
+            "domain": "logistics-global.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity desynchronization: Resume name 'David Miller' has zero correlation or name-match similarity with GitHub profile 'CyberGhost_99'."
+        }
+    },
+    {
+        "resume_id": "RES-2026-004",
+        "category": "healthcare",
+        "resume_text": "SUMMARY: Data Analyst specializing in Healthcare Informatics. 4 years experience managing HIPAA-compliant datasets and EHR migrations. SKILLS: SQL, R, Tableau, Python.",
+        "structured_claims": {
+            "name": "Priya Sharma",
+            "claimed_years_experience": 4,
+            "skills": [
+                "SQL",
+                "R",
+                "Tableau"
+            ],
+            "current_title": "Healthcare Data Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "priya-data-health",
+            "repo_count": 18,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 8,
+            "top_language": "R"
+        },
+        "email": {
+            "address": "psharma8822@tempmail.com",
+            "domain": "tempmail.com",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "disposable_email",
+            "reason": "High-risk indicator: Use of a disposable/temporary email service (tempmail.com) for a professional application."
+        }
+    },
+    {
+        "resume_id": "RES-2026-005",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Full Stack Developer at TechGiant (2012-2026). Spearheaded the transition from monolithic architecture to React/Node.js. SKILLS: React, Node.js, MongoDB, Docker.",
+        "structured_claims": {
+            "name": "Marcus Thorne",
+            "claimed_years_experience": 14,
+            "skills": [
+                "React",
+                "Node.js",
+                "Docker"
+            ],
+            "current_title": "Senior Full Stack Developer"
+        },
+        "digital_footprint": {
+            "github_username": "mthorne-dev",
+            "repo_count": 3,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 340,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "marcus.thorne@techgiant.com",
+            "domain": "techgiant.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline Conflict: Claims 14 years of senior-level experience, but GitHub account was created only last year and shows almost no activity (last commit 340 days ago)."
+        }
+    },
+    {
+        "resume_id": "RES-2026-006",
+        "category": "design",
+        "resume_text": "SUMMARY: UI/UX Designer with 3 years experience. Focused on creating accessible design systems for fintech startups. SKILLS: Figma, Adobe XD, CSS, Tailwind.",
+        "structured_claims": {
+            "name": "Elena Rodriguez",
+            "claimed_years_experience": 3,
+            "skills": [
+                "Figma",
+                "Tailwind",
+                "CSS"
+            ],
+            "current_title": "UI/UX Designer"
+        },
+        "digital_footprint": {
+            "github_username": "elena-designs",
+            "repo_count": 15,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 12,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "elena.rodriguez@designhub.io",
+            "domain": "designhub.io",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Experience matches digital footprint age and technical skill alignment."
+        }
+    },
+    {
+        "resume_id": "RES-2026-007",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Blockchain Developer at Decentralized Inc. (2021-Present). Authored 10+ smart contracts in Solidity. SKILLS: Solidity, Web3.js, Ethereum, Rust.",
+        "structured_claims": {
+            "name": "Kevin Park",
+            "claimed_years_experience": 4,
+            "skills": [
+                "Solidity",
+                "Rust",
+                "Web3.js"
+            ],
+            "current_title": "Blockchain Developer"
+        },
+        "digital_footprint": {
+            "github_username": "kpark-web3",
+            "repo_count": 22,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 2,
+            "top_language": "Solidity"
+        },
+        "email": {
+            "address": "kpark@mit.edu",
+            "domain": "mit.edu",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Valid profile. Strong alignment between claimed blockchain skills and GitHub top language/activity."
+        }
+    },
+    {
+        "resume_id": "RES-2026-008",
+        "category": "business",
+        "resume_text": "SUMMARY: Operations Manager with 8 years experience in retail scale-up. SKILLS: Operations, Salesforce, Team Leadership, Budgeting.",
+        "structured_claims": {
+            "name": "Linda Wu",
+            "claimed_years_experience": 8,
+            "skills": [
+                "Salesforce",
+                "Operations"
+            ],
+            "current_title": "Operations Manager"
+        },
+        "digital_footprint": {
+            "github_username": "lwu-ops",
+            "repo_count": 12,
+            "account_created_year": 2017,
+            "last_commit_days_ago": 45,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "linda.wu@retailscale.com",
+            "domain": "retailscale.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Long-standing digital presence consistent with career timeline."
+        }
+    },
+    {
+        "resume_id": "RES-2026-009",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior DevOps Engineer. Expertise in CI/CD pipelines and infrastructure as code. SKILLS: Terraform, AWS, Jenkins, Python, Shell scripting.",
+        "structured_claims": {
+            "name": "James Smith",
+            "claimed_years_experience": 7,
+            "skills": [
+                "Terraform",
+                "AWS",
+                "Jenkins"
+            ],
+            "current_title": "Senior DevOps Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "jsmith-devops",
+            "repo_count": 35,
+            "account_created_year": 2019,
+            "last_commit_days_ago": 5,
+            "top_language": "HCL"
+        },
+        "email": {
+            "address": "jsmith@cloudtech.com",
+            "domain": "cloudtech.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Top language (HCL/Terraform) perfectly matches the DevOps specialization."
+        }
+    },
+    {
+        "resume_id": "RES-2026-010",
+        "category": "tech",
+        "resume_text": "SUMMARY: Full Stack Lead with 12 years experience. Master of React and Cloud Architecture. SKILLS: React, Node.js, AWS, C++.",
+        "structured_claims": {
+            "name": "Robert Brown",
+            "claimed_years_experience": 12,
+            "skills": [
+                "React",
+                "Node.js",
+                "C++"
+            ],
+            "current_title": "Full Stack Lead"
+        },
+        "digital_footprint": {
+            "github_username": "rob-b-codes",
+            "repo_count": 4,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 60,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "robert.brown@gmail.com",
+            "domain": "gmail.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Inflation detected: 12-year veteran claim contradicts a GitHub account created in 2024 with basic HTML repositories."
+        }
+    },
+    {
+        "resume_id": "RES-2026-011",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Frontend Lead at FinTech Solutions (2022-Present). Directed the migration of legacy jQuery codebases to Next.js and TypeScript, improving Core Web Vitals by 40%. SKILLS: TypeScript, React, Next.js, GraphQL, Tailwind.",
+        "structured_claims": {
+            "name": "Sophia Chen",
+            "claimed_years_experience": 4,
+            "skills": [
+                "TypeScript",
+                "Next.js",
+                "GraphQL"
+            ],
+            "current_title": "Frontend Lead"
+        },
+        "digital_footprint": {
+            "github_username": "sophia-codes-frontend",
+            "repo_count": 28,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 4,
+            "top_language": "TypeScript"
+        },
+        "email": {
+            "address": "s.chen@fintech-solutions.com",
+            "domain": "fintech-solutions.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Career progression and technical footprint align perfectly with recent graduation and professional tenure."
+        }
+    },
+    {
+        "resume_id": "RES-2026-012",
+        "category": "healthcare",
+        "resume_text": "SUMMARY: Bioinformatics Researcher with 7 years of experience in genomic data processing. Authored 4 papers on CRISPR sequence analysis using R and Python. SKILLS: R, Bioconductor, Python, Perl, AWS.",
+        "structured_claims": {
+            "name": "Dr. Aris Thorne",
+            "claimed_years_experience": 7,
+            "skills": [
+                "R",
+                "Bioinformatics",
+                "Python"
+            ],
+            "current_title": "Bioinformatics Researcher"
+        },
+        "digital_footprint": {
+            "github_username": "thorne-lab-genomics",
+            "repo_count": 15,
+            "account_created_year": 2018,
+            "last_commit_days_ago": 12,
+            "top_language": "R"
+        },
+        "email": {
+            "address": "athorne@hopkins-medicine.edu",
+            "domain": "hopkins-medicine.edu",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Legitimate profile. University email and specialized repository content match the academic/research background."
+        }
+    },
+    {
+        "resume_id": "RES-2026-013",
+        "category": "business",
+        "resume_text": "EXPERIENCE: Strategy Analyst at Delta Consulting. Developed automated financial reporting dashboards using SQL and PowerBI. SKILLS: SQL, Python, PowerBI, Financial Modeling.",
+        "structured_claims": {
+            "name": "Jordan Lee",
+            "claimed_years_experience": 3,
+            "skills": [
+                "SQL",
+                "PowerBI",
+                "Python"
+            ],
+            "current_title": "Strategy Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "jlee-data-biz",
+            "repo_count": 8,
+            "account_created_year": 2023,
+            "last_commit_days_ago": 22,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "jlee@deltaconsulting.com",
+            "domain": "deltaconsulting.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Consistent profile for a mid-level business analyst."
+        }
+    },
+    {
+        "resume_id": "RES-2026-014",
+        "category": "design",
+        "resume_text": "SUMMARY: Senior Motion Designer. 6 years creating high-fidelity animations and design systems. Specialized in SVG animations and Framer Motion. SKILLS: Framer Motion, GSAP, CSS, Adobe After Effects.",
+        "structured_claims": {
+            "name": "Isabella Rossi",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Framer Motion",
+                "GSAP",
+                "CSS"
+            ],
+            "current_title": "Senior Motion Designer"
+        },
+        "digital_footprint": {
+            "github_username": "rossi-motion",
+            "repo_count": 31,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 1,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "isabella.rossi@motion-studios.co",
+            "domain": "motion-studios.co",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Consistent profile. Strong GitHub activity in CSS/JS libraries aligns with motion design claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-015",
+        "category": "tech",
+        "resume_text": "SUMMARY: Systems Engineer specializing in low-level programming and kernel optimization. 8 years experience with embedded systems and distributed databases. SKILLS: C++, Rust, Linux Kernel, Assembly.",
+        "structured_claims": {
+            "name": "Takahiro Sato",
+            "claimed_years_experience": 8,
+            "skills": [
+                "C++",
+                "Rust",
+                "Kernel"
+            ],
+            "current_title": "Systems Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "sato-kernel-dev",
+            "repo_count": 55,
+            "account_created_year": 2017,
+            "last_commit_days_ago": 2,
+            "top_language": "C++"
+        },
+        "email": {
+            "address": "t.sato@sony-tech.jp",
+            "domain": "sony-tech.jp",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Verified professional profile with deep technical history and corporate domain validation."
+        }
+    },
+    {
+        "resume_id": "RES-2026-016",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Cloud Architect (9 years). Managed multi-cloud transitions for Fortune 50 companies. Expertise in Terraform and Golang. SKILLS: Golang, Terraform, AWS, Azure, GCP.",
+        "structured_claims": {
+            "name": "Daniel O'Connell",
+            "claimed_years_experience": 9,
+            "skills": [
+                "Golang",
+                "Terraform",
+                "Cloud Architecture"
+            ],
+            "current_title": "Senior Cloud Architect"
+        },
+        "digital_footprint": {
+            "github_username": "dan-oc-cloud",
+            "repo_count": 1,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 1,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "dan.cloud.pro@gmail.com",
+            "domain": "gmail.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Significant skill inflation: Claims 9 years of 'Senior' level cloud architecture, but GitHub account was created in 2026 and only contains a basic HTML repository."
+        }
+    },
+    {
+        "resume_id": "RES-2026-017",
+        "category": "business",
+        "resume_text": "SUMMARY: Python-driven Data Analyst with 5 years experience in predictive modeling and consumer behavior analysis. SKILLS: Python, Pandas, Scikit-learn, Tableau.",
+        "structured_claims": {
+            "name": "Maya Patel",
+            "claimed_years_experience": 5,
+            "skills": [
+                "Python",
+                "Pandas",
+                "Scikit-learn"
+            ],
+            "current_title": "Data Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "maya-data-viz",
+            "repo_count": 4,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 80,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "maya.patel@analytix-pro.net",
+            "domain": "analytix-pro.net",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Domain-Skill mismatch: Claims deep Python expertise for 5 years, but GitHub shows recently created JavaScript projects and no Python activity."
+        }
+    },
+    {
+        "resume_id": "RES-2026-018",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Lead Java Developer at Enterprise Solutions. 12 years building scalable financial applications. SKILLS: Java, Spring Boot, Microservices, Oracle DB.",
+        "structured_claims": {
+            "name": "Samuel Richards",
+            "claimed_years_experience": 12,
+            "skills": [
+                "Java",
+                "Spring Boot",
+                "Oracle"
+            ],
+            "current_title": "Lead Java Developer"
+        },
+        "digital_footprint": {
+            "github_username": "sam-codes-java",
+            "repo_count": 2,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 5,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "sam.richards.java@mailinator.com",
+            "domain": "mailinator.com",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "disposable_email",
+            "reason": "Disposable email detected (mailinator.com). Additionally, 12 years of experience is poorly supported by a 2024 GitHub account featuring Python rather than Java."
+        }
+    },
+    {
+        "resume_id": "RES-2026-019",
+        "category": "tech",
+        "resume_text": "SUMMARY: Cybersecurity Specialist focused on penetration testing and threat intelligence. 4 years of experience. SKILLS: Kali Linux, Metasploit, Python, Bash.",
+        "structured_claims": {
+            "name": "Anita Desai",
+            "claimed_years_experience": 4,
+            "skills": [
+                "Cybersecurity",
+                "Penetration Testing",
+                "Python"
+            ],
+            "current_title": "Cybersecurity Specialist"
+        },
+        "digital_footprint": {
+            "github_username": "CodeWarrior_XYZ",
+            "repo_count": 14,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 15,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "anita.desai@secure-net.com",
+            "domain": "secure-net.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity desynchronization: Resume name 'Anita Desai' has no similarity or verified link to the GitHub profile 'CodeWarrior_XYZ', which lacks any personal identifiers."
+        }
+    },
+    {
+        "resume_id": "RES-2026-020",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Principal Software Engineer with 10 years experience. Led multiple digital transformation projects for retail giants. SKILLS: C#, .NET Core, Azure, SQL Server.",
+        "structured_claims": {
+            "name": "Gregory Vance",
+            "claimed_years_experience": 10,
+            "skills": [
+                "C#",
+                ".NET Core",
+                "Azure"
+            ],
+            "current_title": "Principal Software Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "gvance-dotnet",
+            "repo_count": 3,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 180,
+            "top_language": "C#"
+        },
+        "email": {
+            "address": "g.vance@retail-edge.com",
+            "domain": "retail-edge.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline Conflict: 10 years of professional seniority claimed, but GitHub presence is less than 1 year old with stagnant activity (180 days since last commit)."
+        }
+    },
+    {
+        "resume_id": "RES-2026-021",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Data Engineer at StreamLine Data (2019-Present). Built ETL pipelines processing 5TB/day using Spark and Airflow. SKILLS: Apache Spark, Airflow, Python, Scala, Snowflake.",
+        "structured_claims": {
+            "name": "Ethan Caldwell",
+            "claimed_years_experience": 7,
+            "skills": [
+                "Spark",
+                "Airflow",
+                "Scala"
+            ],
+            "current_title": "Senior Data Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "ethan-data-eng",
+            "repo_count": 38,
+            "account_created_year": 2018,
+            "last_commit_days_ago": 5,
+            "top_language": "Scala"
+        },
+        "email": {
+            "address": "e.caldwell@streamline.io",
+            "domain": "streamline.io",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. High-volume repo count and language alignment (Scala) support senior engineering claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-022",
+        "category": "healthcare",
+        "resume_text": "SUMMARY: Clinical Research Associate with 5 years experience in phase III oncology trials. Managed regulatory documentation and site monitoring. SKILLS: GCP Compliance, Clinical Trials, CTMS, Data Analysis.",
+        "structured_claims": {
+            "name": "Dr. Sarah Jenkins",
+            "claimed_years_experience": 5,
+            "skills": [
+                "GCP",
+                "Clinical Trials",
+                "Data Analysis"
+            ],
+            "current_title": "Clinical Research Associate"
+        },
+        "digital_footprint": {
+            "github_username": "sjenkins-clinical",
+            "repo_count": 5,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 45,
+            "top_language": "R"
+        },
+        "email": {
+            "address": "s.jenkins@mayo.edu",
+            "domain": "mayo.edu",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Legitimate profile. University domain and moderate R activity for data analysis align with the role."
+        }
+    },
+    {
+        "resume_id": "RES-2026-023",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: iOS Developer at AppForge (2021-2026). Developed 3 top-tier finance apps using Swift and SwiftUI. Implemented biometric authentication and offline caching. SKILLS: Swift, SwiftUI, Objective-C, CoreData.",
+        "structured_claims": {
+            "name": "Lucas Meyer",
+            "claimed_years_experience": 5,
+            "skills": [
+                "Swift",
+                "SwiftUI",
+                "CoreData"
+            ],
+            "current_title": "iOS Developer"
+        },
+        "digital_footprint": {
+            "github_username": "meyer-ios-dev",
+            "repo_count": 22,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 2,
+            "top_language": "Swift"
+        },
+        "email": {
+            "address": "lucas.meyer@appforge.dev",
+            "domain": "appforge.dev",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Strong alignment between Swift-heavy GitHub and iOS development claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-024",
+        "category": "business",
+        "resume_text": "SUMMARY: Marketing Analytics Manager with a focus on ROI optimization. 6 years experience using SQL and Python to drive growth strategies. SKILLS: SQL, Python, Tableau, Google Analytics.",
+        "structured_claims": {
+            "name": "Amina Yusuf",
+            "claimed_years_experience": 6,
+            "skills": [
+                "SQL",
+                "Python",
+                "Tableau"
+            ],
+            "current_title": "Marketing Analytics Manager"
+        },
+        "digital_footprint": {
+            "github_username": "amina-analytics",
+            "repo_count": 12,
+            "account_created_year": 2018,
+            "last_commit_days_ago": 15,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "ayusuf@growthmetric.com",
+            "domain": "growthmetric.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Profile is consistent with a mid-career transition into analytics."
+        }
+    },
+    {
+        "resume_id": "RES-2026-025",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Security Engineer at CyberDefend. Specialized in cloud security posture management and automated incident response. SKILLS: AWS Security, Python, Go, Terraform.",
+        "structured_claims": {
+            "name": "Liam Vance",
+            "claimed_years_experience": 4,
+            "skills": [
+                "AWS Security",
+                "Terraform",
+                "Go"
+            ],
+            "current_title": "Security Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "vance-sec",
+            "repo_count": 19,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 6,
+            "top_language": "HCL"
+        },
+        "email": {
+            "address": "l.vance@cyberdefend.co",
+            "domain": "cyberdefend.co",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Top language HCL (HashiCorp Configuration Language) validates Terraform expertise."
+        }
+    },
+    {
+        "resume_id": "RES-2026-026",
+        "category": "tech",
+        "resume_text": "SUMMARY: Machine Learning Engineer with 8 years of experience. Expert in Transformer architectures and Large Language Models. SKILLS: Python, PyTorch, LLMs, NLP.",
+        "structured_claims": {
+            "name": "Rajesh Gupta",
+            "claimed_years_experience": 8,
+            "skills": [
+                "PyTorch",
+                "LLMs",
+                "NLP"
+            ],
+            "current_title": "Senior ML Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "raj-gupta-88",
+            "repo_count": 2,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 20,
+            "top_language": "Java"
+        },
+        "email": {
+            "address": "rajesh.gupta.ml@gmail.com",
+            "domain": "gmail.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Skill-Language mismatch: Claims 8 years of ML (Python/PyTorch) but GitHub is 1 year old and primarily Java-based."
+        }
+    },
+    {
+        "resume_id": "RES-2026-027",
+        "category": "design",
+        "resume_text": "EXPERIENCE: Principal Product Designer with 12 years in the industry. Lead design systems for multiple unicorn startups. SKILLS: Design Systems, React, Figma, Prototyping.",
+        "structured_claims": {
+            "name": "Monica Geller",
+            "claimed_years_experience": 12,
+            "skills": [
+                "Design Systems",
+                "React"
+            ],
+            "current_title": "Principal Product Designer"
+        },
+        "digital_footprint": {
+            "github_username": "monica-design-pro",
+            "repo_count": 1,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 300,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "m.geller@design-collective.net",
+            "domain": "design-collective.net",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline Conflict: 12-year industry veteran has a nearly empty GitHub account created only 2 years ago with zero recent activity."
+        }
+    },
+    {
+        "resume_id": "RES-2026-028",
+        "category": "business",
+        "resume_text": "SUMMARY: Data Scientist specialized in predictive maintenance for industrial manufacturing. 6 years experience. SKILLS: Python, Scikit-learn, SQL, Docker.",
+        "structured_claims": {
+            "name": "Hiroshi Tanaka",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Python",
+                "Scikit-learn"
+            ],
+            "current_title": "Data Scientist"
+        },
+        "digital_footprint": {
+            "github_username": "hiroshi-dev-2026",
+            "repo_count": 3,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 1,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "h.tanaka@manufacture-pro.jp",
+            "domain": "manufacture-pro.jp",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "High-risk inflation: Claims 6 years of Data Science (Python) but GitHub was created this year and only contains CSS repositories."
+        }
+    },
+    {
+        "resume_id": "RES-2026-029",
+        "category": "tech",
+        "resume_text": "SUMMARY: Senior Full Stack Developer. Expert in building high-availability e-commerce platforms. 9 years experience. SKILLS: Node.js, React, AWS, Redis.",
+        "structured_claims": {
+            "name": "Omar Al-Farsi",
+            "claimed_years_experience": 9,
+            "skills": [
+                "Node.js",
+                "React",
+                "Redis"
+            ],
+            "current_title": "Senior Full Stack Developer"
+        },
+        "digital_footprint": {
+            "github_username": "EliteHacker2022",
+            "repo_count": 45,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 3,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "omar.alfarsi@tech-solutions.om",
+            "domain": "tech-solutions.om",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity desynchronization: Resume name 'Omar Al-Farsi' shares no data points or personal linkage with the generic handle 'EliteHacker2022'."
+        }
+    },
+    {
+        "resume_id": "RES-2026-030",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Backend Engineer at ScaleUp (2023-Present). Developed RESTful APIs and managed PostgreSQL databases. SKILLS: Python, Django, PostgreSQL, Docker.",
+        "structured_claims": {
+            "name": "Chloe Bennett",
+            "claimed_years_experience": 3,
+            "skills": [
+                "Python",
+                "Django",
+                "PostgreSQL"
+            ],
+            "current_title": "Backend Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "chloe-codes-python",
+            "repo_count": 14,
+            "account_created_year": 2023,
+            "last_commit_days_ago": 10,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "c.bennett@mailinator.com",
+            "domain": "mailinator.com",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "disposable_email",
+            "reason": "Immediate flag: Professional application submitted via a disposable email domain (mailinator.com)."
+        }
+    },
+    {
+        "resume_id": "RES-2026-031",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Smart Contract Engineer at EtherFlow. Developed and audited DeFi protocols managing $50M+ TVL. Expert in gas optimization and security patterns. SKILLS: Solidity, Hardhat, Ethers.js, Rust, Go.",
+        "structured_claims": {
+            "name": "Julian Thorne",
+            "claimed_years_experience": 5,
+            "skills": [
+                "Solidity",
+                "Hardhat",
+                "DeFi"
+            ],
+            "current_title": "Senior Smart Contract Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "j-thorne-web3",
+            "repo_count": 41,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 2,
+            "top_language": "Solidity"
+        },
+        "email": {
+            "address": "j.thorne@etherflow.io",
+            "domain": "etherflow.io",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Strong alignment between claimed Web3 expertise and Solidity-dominant GitHub activity."
+        }
+    },
+    {
+        "resume_id": "RES-2026-032",
+        "category": "tech",
+        "resume_text": "SUMMARY: AI Engineer with a focus on Computer Vision and Edge AI. 4 years experience deploying YOLO models for industrial quality control. SKILLS: Python, C++, OpenCV, TensorFlow, PyTorch.",
+        "structured_claims": {
+            "name": "Li Wei",
+            "claimed_years_experience": 4,
+            "skills": [
+                "Computer Vision",
+                "OpenCV",
+                "PyTorch"
+            ],
+            "current_title": "AI Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "li-wei-cv",
+            "repo_count": 18,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 7,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "li.wei@tsinghua.org.cn",
+            "domain": "tsinghua.org.cn",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Verified academic and professional alignment."
+        }
+    },
+    {
+        "resume_id": "RES-2026-033",
+        "category": "design",
+        "resume_text": "EXPERIENCE: Lead Product Designer at NeoBank. Pioneered the mobile-first design system now used by 2M+ users. SKILLS: Figma, Design Systems, Prototyping, User Research.",
+        "structured_claims": {
+            "name": "Sarah Connor",
+            "claimed_years_experience": 8,
+            "skills": [
+                "Design Systems",
+                "Figma",
+                "User Research"
+            ],
+            "current_title": "Lead Product Designer"
+        },
+        "digital_footprint": {
+            "github_username": "sconnor-design",
+            "repo_count": 12,
+            "account_created_year": 2018,
+            "last_commit_days_ago": 45,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "sarah.connor@neobank.com",
+            "domain": "neobank.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Consistent design profile. Corporate domain and 2018 account age support seniority."
+        }
+    },
+    {
+        "resume_id": "RES-2026-034",
+        "category": "business",
+        "resume_text": "SUMMARY: FinTech Analyst specializing in fraud detection systems and risk modeling. 5 years experience at a Tier-1 bank. SKILLS: SQL, Python, SAS, Risk Management.",
+        "structured_claims": {
+            "name": "Arjun Rao",
+            "claimed_years_experience": 5,
+            "skills": [
+                "Risk Modeling",
+                "SQL",
+                "Python"
+            ],
+            "current_title": "FinTech Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "arao-risk-dev",
+            "repo_count": 9,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 14,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "a.rao@standardchartered.com",
+            "domain": "standardchartered.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Legitimate profile with high-trust corporate domain."
+        }
+    },
+    {
+        "resume_id": "RES-2026-035",
+        "category": "healthcare",
+        "resume_text": "EXPERIENCE: Health Data Scientist. Developed predictive models for patient readmission rates using hospital EHR data. SKILLS: R, SQL, Pavilion, Healthcare Analytics.",
+        "structured_claims": {
+            "name": "Elena Belova",
+            "claimed_years_experience": 3,
+            "skills": [
+                "Healthcare Analytics",
+                "R",
+                "SQL"
+            ],
+            "current_title": "Health Data Scientist"
+        },
+        "digital_footprint": {
+            "github_username": "ebelova-health",
+            "repo_count": 14,
+            "account_created_year": 2023,
+            "last_commit_days_ago": 8,
+            "top_language": "R"
+        },
+        "email": {
+            "address": "ebelova@med-analytics.ru",
+            "domain": "med-analytics.ru",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Consistent data points for a mid-level healthcare analyst."
+        }
+    },
+    {
+        "resume_id": "RES-2026-036",
+        "category": "tech",
+        "resume_text": "SUMMARY: Senior Blockchain Architect with 6 years experience in Rust-based chains (Solana, Polkadot). Expert in runtime logic and P2P networking. SKILLS: Rust, Solidity, C++, WASM.",
+        "structured_claims": {
+            "name": "Kevin Flynn",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Rust",
+                "WASM",
+                "Blockchain Architecture"
+            ],
+            "current_title": "Senior Blockchain Architect"
+        },
+        "digital_footprint": {
+            "github_username": "kflynn-dev",
+            "repo_count": 3,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 90,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "kevin.flynn.crypto@gmail.com",
+            "domain": "gmail.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Skill-Language Mismatch: Claims seniority in Rust/Blockchain architecture, but GitHub is 1 year old and consists of basic JavaScript projects."
+        }
+    },
+    {
+        "resume_id": "RES-2026-037",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: LLM Research Engineer. 10 years experience in NLP and Large Language Models. Lead developer on 'Global-GPT' initiative. SKILLS: Transformers, Python, PyTorch, Cuda.",
+        "structured_claims": {
+            "name": "Mina Harker",
+            "claimed_years_experience": 10,
+            "skills": [
+                "Transformers",
+                "PyTorch",
+                "NLP"
+            ],
+            "current_title": "LLM Research Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "mina-h-nlp",
+            "repo_count": 2,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 1,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "mina.harker@temp-inbox.com",
+            "domain": "temp-inbox.com",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline and Email Red Flags: Claims 10 years in a highly specialized field (LLMs), but uses a 2026-created GitHub account and a disposable email domain."
+        }
+    },
+    {
+        "resume_id": "RES-2026-038",
+        "category": "tech",
+        "resume_text": "SUMMARY: Cloud Operations Lead. 12 years experience managing Kubernetes clusters at scale for global logistics firms. SKILLS: Kubernetes, Docker, Terraform, Go, Bash.",
+        "structured_claims": {
+            "name": "Victor Stone",
+            "claimed_years_experience": 12,
+            "skills": [
+                "Kubernetes",
+                "Terraform",
+                "Go"
+            ],
+            "current_title": "Cloud Operations Lead"
+        },
+        "digital_footprint": {
+            "github_username": "vstone-ops",
+            "repo_count": 5,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 200,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "v.stone@logistics-pro.com",
+            "domain": "logistics-pro.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Inflation detected: Claims 12 years of high-level Ops (K8s/Go), but GitHub shows only basic HTML and has been stagnant for nearly a year."
+        }
+    },
+    {
+        "resume_id": "RES-2026-039",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Full Stack Developer specializing in React and Node.js. 4 years of experience building scalable SaaS platforms. SKILLS: React, Node.js, MongoDB, AWS.",
+        "structured_claims": {
+            "name": "Sofia Ramirez",
+            "claimed_years_experience": 4,
+            "skills": [
+                "React",
+                "Node.js",
+                "MongoDB"
+            ],
+            "current_title": "Full Stack Developer"
+        },
+        "digital_footprint": {
+            "github_username": "X-Terminator-9000",
+            "repo_count": 65,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 3,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "sofia.ramirez88@outlook.com",
+            "domain": "outlook.com",
+            "domain_type": "public"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity desynchronization: Resume name 'Sofia Ramirez' has zero correlation with the highly active but anonymous/aliased GitHub handle 'X-Terminator-9000'."
+        }
+    },
+    {
+        "resume_id": "RES-2026-040",
+        "category": "tech",
+        "resume_text": "SUMMARY: Lead DevSecOps Engineer. 15 years experience in secure infrastructure and automated compliance. SKILLS: AWS, Jenkins, Python, Terraform, Vault.",
+        "structured_claims": {
+            "name": "Thomas Anderson",
+            "claimed_years_experience": 15,
+            "skills": [
+                "DevSecOps",
+                "Terraform",
+                "Vault"
+            ],
+            "current_title": "Lead DevSecOps Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "t-anderson-sec",
+            "repo_count": 1,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 1,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "t.anderson@corporate-secure.net",
+            "domain": "corporate-secure.net",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Extreme timeline conflict: A 15-year veteran in DevSecOps would not have a GitHub account created in the current year with only a single repository."
+        }
+    },
+    {
+        "resume_id": "RES-2026-041",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Data Scientist at RetailPulse (2020-Present). Implemented demand forecasting models using Prophet and XGBoost, increasing inventory turnover by 22%. SKILLS: Python, SQL, Spark, XGBoost, AWS SageMaker.",
+        "structured_claims": {
+            "name": "David Thorne",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Python",
+                "XGBoost",
+                "SageMaker"
+            ],
+            "current_title": "Senior Data Scientist"
+        },
+        "digital_footprint": {
+            "github_username": "dthorne-data",
+            "repo_count": 25,
+            "account_created_year": 2019,
+            "last_commit_days_ago": 4,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "d.thorne@retailpulse.ai",
+            "domain": "retailpulse.ai",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Consistent timeline and skill-language alignment."
+        }
+    },
+    {
+        "resume_id": "RES-2026-042",
+        "category": "healthcare",
+        "resume_text": "SUMMARY: Medical AI Researcher specialized in Pathology Image Analysis. 5 years experience at NIH. SKILLS: PyTorch, MONAI, DICOM, Python, C++.",
+        "structured_claims": {
+            "name": "Dr. Aris Varma",
+            "claimed_years_experience": 5,
+            "skills": [
+                "MONAI",
+                "PyTorch",
+                "Medical Imaging"
+            ],
+            "current_title": "Medical AI Researcher"
+        },
+        "digital_footprint": {
+            "github_username": "avarma-nih-research",
+            "repo_count": 14,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 15,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "avarma@mail.nih.gov",
+            "domain": "nih.gov",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "High-trust profile validated by government domain and specialized repo content."
+        }
+    },
+    {
+        "resume_id": "RES-2026-043",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Flutter Developer at Nomad Apps (2022-2026). Published 5+ cross-platform apps on Play Store and App Store. SKILLS: Dart, Flutter, Firebase, Bloc.",
+        "structured_claims": {
+            "name": "Isabel Luna",
+            "claimed_years_experience": 4,
+            "skills": [
+                "Flutter",
+                "Dart",
+                "Firebase"
+            ],
+            "current_title": "Flutter Developer"
+        },
+        "digital_footprint": {
+            "github_username": "luna-dart-dev",
+            "repo_count": 22,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 2,
+            "top_language": "Dart"
+        },
+        "email": {
+            "address": "isabel.luna@nomadapps.co",
+            "domain": "nomadapps.co",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Strong alignment between Dart activity and Flutter developer claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-044",
+        "category": "business",
+        "resume_text": "SUMMARY: Quant Analyst with 8 years experience in algorithmic trading. Developed HFT strategies using C++ and Python. SKILLS: C++, Python, KDB+, Quantitative Research.",
+        "structured_claims": {
+            "name": "Samuel Zhang",
+            "claimed_years_experience": 8,
+            "skills": [
+                "C++",
+                "Algorithmic Trading",
+                "Python"
+            ],
+            "current_title": "Senior Quant Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "szhang-quant",
+            "repo_count": 31,
+            "account_created_year": 2017,
+            "last_commit_days_ago": 10,
+            "top_language": "C++"
+        },
+        "email": {
+            "address": "s.zhang@citadel.alumni.com",
+            "domain": "citadel.alumni.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Verified professional profile with consistent long-term footprint."
+        }
+    },
+    {
+        "resume_id": "RES-2026-045",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Cloud Security Engineer. Managed IAM and VPC security for high-traffic SaaS. SKILLS: AWS, Terraform, Python, Go, Kubernetes Security.",
+        "structured_claims": {
+            "name": "Jordan P. Miller",
+            "claimed_years_experience": 4,
+            "skills": [
+                "AWS Security",
+                "Terraform",
+                "IAM"
+            ],
+            "current_title": "Cloud Security Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "jmiller-sec-ops",
+            "repo_count": 18,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 6,
+            "top_language": "HCL"
+        },
+        "email": {
+            "address": "jordan.miller@cloudguard.io",
+            "domain": "cloudguard.io",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Language validation (HCL for Terraform) matches claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-046",
+        "category": "tech",
+        "resume_text": "SUMMARY: Principal ML Architect. 12 years lead experience in Large Scale Distributed Systems and Neural Architecture Search. SKILLS: Python, PyTorch, Distributed Systems, Rust.",
+        "structured_claims": {
+            "name": "Julian Thorne",
+            "claimed_years_experience": 12,
+            "skills": [
+                "PyTorch",
+                "Distributed Systems",
+                "NAS"
+            ],
+            "current_title": "Principal ML Architect"
+        },
+        "digital_footprint": {
+            "github_username": "julian-ai-architect",
+            "repo_count": 2,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 80,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "julian.thorne@ai-visionary.net",
+            "domain": "ai-visionary.net",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Extreme Skill Inflation: Claims 12 years of 'Principal' ML leadership but has a novice-level GitHub account with 2 HTML repos created in 2025."
+        }
+    },
+    {
+        "resume_id": "RES-2026-047",
+        "category": "design",
+        "resume_text": "SUMMARY: UX Director with 15 years experience. Built design teams for Fortune 50 companies. SKILLS: Design Strategy, Figma, CSS, Accessibility.",
+        "structured_claims": {
+            "name": "Maria Garcia",
+            "claimed_years_experience": 15,
+            "skills": [
+                "Design Strategy",
+                "Accessibility"
+            ],
+            "current_title": "UX Director"
+        },
+        "digital_footprint": {
+            "github_username": "garcia-design-lead",
+            "repo_count": 0,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 0,
+            "top_language": ""
+        },
+        "email": {
+            "address": "m.garcia@design-pro.biz",
+            "domain": "design-pro.biz",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline Red Flag: 15-year veteran has zero digital footprint until the current year (2026), suggesting a fabricated professional history."
+        }
+    },
+    {
+        "resume_id": "RES-2026-048",
+        "category": "business",
+        "resume_text": "EXPERIENCE: Product Lead at CryptoSphere (2021-Present). Spearheaded the launch of 3 dApps with 500k monthly users. SKILLS: Product Management, Web3, Solidity, Agile.",
+        "structured_claims": {
+            "name": "Alex Rivet",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Web3",
+                "Solidity",
+                "Product Management"
+            ],
+            "current_title": "Product Lead"
+        },
+        "digital_footprint": {
+            "github_username": "alex-product-web3",
+            "repo_count": 4,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 300,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "a.rivet@temp-mail.org",
+            "domain": "temp-mail.org",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "disposable_email",
+            "reason": "Fraud signal: Use of a disposable email for a senior-level position. Low activity on GitHub (last commit 300 days ago) also flags risk."
+        }
+    },
+    {
+        "resume_id": "RES-2026-049",
+        "category": "tech",
+        "resume_text": "SUMMARY: Senior Backend Engineer specializing in Java and Spring Boot. 10 years experience in banking systems. SKILLS: Java, Spring Boot, Microservices, Oracle.",
+        "structured_claims": {
+            "name": "Robert Downey",
+            "claimed_years_experience": 10,
+            "skills": [
+                "Java",
+                "Spring Boot",
+                "Microservices"
+            ],
+            "current_title": "Senior Backend Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "IronCoder_2026",
+            "repo_count": 88,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 1,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "robert.d@banking-pro.com",
+            "domain": "banking-pro.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity & Skill Mismatch: Generic/Aliased username 'IronCoder_2026' has no link to 'Robert Downey'. Furthermore, the profile is Python-dominant while the resume claims Java expertise."
+        }
+    },
+    {
+        "resume_id": "RES-2026-050",
+        "category": "tech",
+        "resume_text": "SUMMARY: Rust Systems Developer with 7 years experience in high-performance computing. SKILLS: Rust, C++, Linux, Docker.",
+        "structured_claims": {
+            "name": "Li Na",
+            "claimed_years_experience": 7,
+            "skills": [
+                "Rust",
+                "Systems Programming"
+            ],
+            "current_title": "Senior Rust Developer"
+        },
+        "digital_footprint": {
+            "github_username": "lina-systems-dev",
+            "repo_count": 2,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 5,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "lina.na@tech-core.cn",
+            "domain": "tech-core.cn",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "High-risk inflation: 7 years of specialized Rust experience is claimed, but the GitHub footprint consists of basic CSS repos created this year."
+        }
+    },
+    {
+        "resume_id": "RES-2026-041",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Senior Data Scientist at RetailPulse (2020-Present). Implemented demand forecasting models using Prophet and XGBoost, increasing inventory turnover by 22%. SKILLS: Python, SQL, Spark, XGBoost, AWS SageMaker.",
+        "structured_claims": {
+            "name": "David Thorne",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Python",
+                "XGBoost",
+                "SageMaker"
+            ],
+            "current_title": "Senior Data Scientist"
+        },
+        "digital_footprint": {
+            "github_username": "dthorne-data",
+            "repo_count": 25,
+            "account_created_year": 2019,
+            "last_commit_days_ago": 4,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "d.thorne@retailpulse.ai",
+            "domain": "retailpulse.ai",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Consistent timeline and skill-language alignment."
+        }
+    },
+    {
+        "resume_id": "RES-2026-042",
+        "category": "healthcare",
+        "resume_text": "SUMMARY: Medical AI Researcher specialized in Pathology Image Analysis. 5 years experience at NIH. SKILLS: PyTorch, MONAI, DICOM, Python, C++.",
+        "structured_claims": {
+            "name": "Dr. Aris Varma",
+            "claimed_years_experience": 5,
+            "skills": [
+                "MONAI",
+                "PyTorch",
+                "Medical Imaging"
+            ],
+            "current_title": "Medical AI Researcher"
+        },
+        "digital_footprint": {
+            "github_username": "avarma-nih-research",
+            "repo_count": 14,
+            "account_created_year": 2020,
+            "last_commit_days_ago": 15,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "avarma@mail.nih.gov",
+            "domain": "nih.gov",
+            "domain_type": "university"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "High-trust profile validated by government domain and specialized repo content."
+        }
+    },
+    {
+        "resume_id": "RES-2026-043",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Flutter Developer at Nomad Apps (2022-2026). Published 5+ cross-platform apps on Play Store and App Store. SKILLS: Dart, Flutter, Firebase, Bloc.",
+        "structured_claims": {
+            "name": "Isabel Luna",
+            "claimed_years_experience": 4,
+            "skills": [
+                "Flutter",
+                "Dart",
+                "Firebase"
+            ],
+            "current_title": "Flutter Developer"
+        },
+        "digital_footprint": {
+            "github_username": "luna-dart-dev",
+            "repo_count": 22,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 2,
+            "top_language": "Dart"
+        },
+        "email": {
+            "address": "isabel.luna@nomadapps.co",
+            "domain": "nomadapps.co",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Strong alignment between Dart activity and Flutter developer claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-044",
+        "category": "business",
+        "resume_text": "SUMMARY: Quant Analyst with 8 years experience in algorithmic trading. Developed HFT strategies using C++ and Python. SKILLS: C++, Python, KDB+, Quantitative Research.",
+        "structured_claims": {
+            "name": "Samuel Zhang",
+            "claimed_years_experience": 8,
+            "skills": [
+                "C++",
+                "Algorithmic Trading",
+                "Python"
+            ],
+            "current_title": "Senior Quant Analyst"
+        },
+        "digital_footprint": {
+            "github_username": "szhang-quant",
+            "repo_count": 31,
+            "account_created_year": 2017,
+            "last_commit_days_ago": 10,
+            "top_language": "C++"
+        },
+        "email": {
+            "address": "s.zhang@citadel.alumni.com",
+            "domain": "citadel.alumni.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Verified professional profile with consistent long-term footprint."
+        }
+    },
+    {
+        "resume_id": "RES-2026-045",
+        "category": "tech",
+        "resume_text": "EXPERIENCE: Cloud Security Engineer. Managed IAM and VPC security for high-traffic SaaS. SKILLS: AWS, Terraform, Python, Go, Kubernetes Security.",
+        "structured_claims": {
+            "name": "Jordan P. Miller",
+            "claimed_years_experience": 4,
+            "skills": [
+                "AWS Security",
+                "Terraform",
+                "IAM"
+            ],
+            "current_title": "Cloud Security Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "jmiller-sec-ops",
+            "repo_count": 18,
+            "account_created_year": 2021,
+            "last_commit_days_ago": 6,
+            "top_language": "HCL"
+        },
+        "email": {
+            "address": "jordan.miller@cloudguard.io",
+            "domain": "cloudguard.io",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 0,
+            "fraud_type": "none",
+            "reason": "Clean profile. Language validation (HCL for Terraform) matches claims."
+        }
+    },
+    {
+        "resume_id": "RES-2026-046",
+        "category": "tech",
+        "resume_text": "SUMMARY: Principal ML Architect. 12 years lead experience in Large Scale Distributed Systems and Neural Architecture Search. SKILLS: Python, PyTorch, Distributed Systems, Rust.",
+        "structured_claims": {
+            "name": "Julian Thorne",
+            "claimed_years_experience": 12,
+            "skills": [
+                "PyTorch",
+                "Distributed Systems",
+                "NAS"
+            ],
+            "current_title": "Principal ML Architect"
+        },
+        "digital_footprint": {
+            "github_username": "julian-ai-architect",
+            "repo_count": 2,
+            "account_created_year": 2025,
+            "last_commit_days_ago": 80,
+            "top_language": "HTML"
+        },
+        "email": {
+            "address": "julian.thorne@ai-visionary.net",
+            "domain": "ai-visionary.net",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "Extreme Skill Inflation: Claims 12 years of 'Principal' ML leadership but has a novice-level GitHub account with 2 HTML repos created in 2025."
+        }
+    },
+    {
+        "resume_id": "RES-2026-047",
+        "category": "design",
+        "resume_text": "SUMMARY: UX Director with 15 years experience. Built design teams for Fortune 50 companies. SKILLS: Design Strategy, Figma, CSS, Accessibility.",
+        "structured_claims": {
+            "name": "Maria Garcia",
+            "claimed_years_experience": 15,
+            "skills": [
+                "Design Strategy",
+                "Accessibility"
+            ],
+            "current_title": "UX Director"
+        },
+        "digital_footprint": {
+            "github_username": "garcia-design-lead",
+            "repo_count": 0,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 0,
+            "top_language": ""
+        },
+        "email": {
+            "address": "m.garcia@design-pro.biz",
+            "domain": "design-pro.biz",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "timeline_conflict",
+            "reason": "Timeline Red Flag: 15-year veteran has zero digital footprint until the current year (2026), suggesting a fabricated professional history."
+        }
+    },
+    {
+        "resume_id": "RES-2026-048",
+        "category": "business",
+        "resume_text": "EXPERIENCE: Product Lead at CryptoSphere (2021-Present). Spearheaded the launch of 3 dApps with 500k monthly users. SKILLS: Product Management, Web3, Solidity, Agile.",
+        "structured_claims": {
+            "name": "Alex Rivet",
+            "claimed_years_experience": 6,
+            "skills": [
+                "Web3",
+                "Solidity",
+                "Product Management"
+            ],
+            "current_title": "Product Lead"
+        },
+        "digital_footprint": {
+            "github_username": "alex-product-web3",
+            "repo_count": 4,
+            "account_created_year": 2024,
+            "last_commit_days_ago": 300,
+            "top_language": "JavaScript"
+        },
+        "email": {
+            "address": "a.rivet@temp-mail.org",
+            "domain": "temp-mail.org",
+            "domain_type": "disposable"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "disposable_email",
+            "reason": "Fraud signal: Use of a disposable email for a senior-level position. Low activity on GitHub (last commit 300 days ago) also flags risk."
+        }
+    },
+    {
+        "resume_id": "RES-2026-049",
+        "category": "tech",
+        "resume_text": "SUMMARY: Senior Backend Engineer specializing in Java and Spring Boot. 10 years experience in banking systems. SKILLS: Java, Spring Boot, Microservices, Oracle.",
+        "structured_claims": {
+            "name": "Robert Downey",
+            "claimed_years_experience": 10,
+            "skills": [
+                "Java",
+                "Spring Boot",
+                "Microservices"
+            ],
+            "current_title": "Senior Backend Engineer"
+        },
+        "digital_footprint": {
+            "github_username": "IronCoder_2026",
+            "repo_count": 88,
+            "account_created_year": 2022,
+            "last_commit_days_ago": 1,
+            "top_language": "Python"
+        },
+        "email": {
+            "address": "robert.d@banking-pro.com",
+            "domain": "banking-pro.com",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "identity_mismatch",
+            "reason": "Identity & Skill Mismatch: Generic/Aliased username 'IronCoder_2026' has no link to 'Robert Downey'. Furthermore, the profile is Python-dominant while the resume claims Java expertise."
+        }
+    },
+    {
+        "resume_id": "RES-2026-050",
+        "category": "tech",
+        "resume_text": "SUMMARY: Rust Systems Developer with 7 years experience in high-performance computing. SKILLS: Rust, C++, Linux, Docker.",
+        "structured_claims": {
+            "name": "Li Na",
+            "claimed_years_experience": 7,
+            "skills": [
+                "Rust",
+                "Systems Programming"
+            ],
+            "current_title": "Senior Rust Developer"
+        },
+        "digital_footprint": {
+            "github_username": "lina-systems-dev",
+            "repo_count": 2,
+            "account_created_year": 2026,
+            "last_commit_days_ago": 5,
+            "top_language": "CSS"
+        },
+        "email": {
+            "address": "lina.na@tech-core.cn",
+            "domain": "tech-core.cn",
+            "domain_type": "corporate"
+        },
+        "ground_truth": {
+            "fraud_label": 1,
+            "fraud_type": "skill_inflation",
+            "reason": "High-risk inflation: 7 years of specialized Rust experience is claimed, but the GitHub footprint consists of basic CSS repos created this year."
+        }
+    }
+]

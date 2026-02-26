@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare • The Honest Recruiter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --surface: rgba(17, 24, 39, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 50%);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Side by Side Header Panel */
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .vs-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-weight: 800;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .cand-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .cand-domain {
+            font-size: 0.9rem;
+            color: #818cf8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        /* Narrative Engine Block */
+        .narrative-block {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 3px solid var(--accent);
+            padding: 24px 30px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 30px;
+        }
+
+        .hi-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .bullet-point {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .bullet-point::before {
+            content: "→";
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .final-rec {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            font-weight: 700;
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+        /* Math Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Comparative Analysis</h1>
+            <a href="/shortlist" class="btn-secondary">← Back to Shortlist</a>
+        </header>
+
+        <div class="glass-card">
+            <div class="comparison-header">
+                <div>
+                    <div class="cand-domain">{{ p1.domain }}</div>
+                    <div class="cand-name">{{ p1.name }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Score: {{
+                        "%.1f"|format(p1.final_score) }} | {{ p1.hash[:8] }}</div>
+                </div>
+                <div>
+                    <span class="vs-badge">VS</span>
+                </div>
+                <div>
+                    <div class="cand-domain">{{ p2.domain }}</div>
+                    <div class="cand-name">{{ p2.name }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Score: {{
+                        "%.1f"|format(p2.final_score) }} | {{ p2.hash[:8] }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Antigravity Narrative -->
+        <div class="narrative-block">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div class="hi-label">
+                    <span class="pulse-dot"></span>
+                    Multi-Model Forensic Synthesis
+                </div>
+                <div
+                    style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 5px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 6px;">
+                    Synthesis Confidence: {{ confidence }}%
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                {% for bullet in narrative %}
+                {% if loop.last and 'Final Recommendation' in bullet %}
+                <div class="final-rec">{{ bullet|replace('- ', '') }}</div>
+                {% else %}
+                <div class="bullet-point">{{ bullet|replace('- ', '') }}</div>
+                {% endif %}
+                {% endfor %}
+                {% if not narrative %}
+                <div style="color:var(--text-secondary);">No narrative generated due to engine timeout.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Deterministic Math Differences -->
+        <div class="glass-card" style="padding: 24px;">
+            <div
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-secondary); margin-bottom: 20px; font-weight: 700;">
+                Deterministic Deltas</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Reliability Difference</div>
+                    {% if metrics.reliability_diff > 0 %}
+                    <div class="stat-val" style="color: #10b981;">
+                        {% elif metrics.reliability_diff < 0 %} <div class="stat-val" style="color: #ef4444;">
+                            {% else %}
+                            <div class="stat-val" style="color: #fff;">
+                                {% endif %}
+                                {{ "%+.1f"|format(metrics.reliability_diff) }}
+                            </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Fraud Difference</div>
+                        {% if metrics.fraud_diff > 0 %}
+                        <div class="stat-val" style="color: #ef4444;">
+                            {% elif metrics.fraud_diff < 0 %} <div class="stat-val" style="color: #10b981;">
+                                {% else %}
+                                <div class="stat-val" style="color: #fff;">
+                                    {% endif %}
+                                    {{ "%+.1f"|format(metrics.fraud_diff) }}
+                                </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Skill Overlap</div>
+                            <div class="stat-val" style="color: #818cf8;">{{ "%.0f"|format(metrics.skill_overlap) }}%
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Experience Gap</div>
+                            <div class="stat-val">{{ "%.1f"|format(metrics.experience_gap) }} yrs</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.65rem; color: #475569; margin-top: 15px; text-align: right; ">
+                        * A positive Reliability Diff means {{ p1.name }} is stronger. A positive Fraud Diff means {{
+                        p1.name }}
+                        is riskier.
+                    </div>
+                </div>
+
+            </div>
+
+</body>
+
+</html>

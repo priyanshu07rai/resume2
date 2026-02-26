@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Honest Recruiter • Forensic Reliability Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712;
+            --surface: rgba(17, 24, 39, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --risk-low: #10b981;
+            --risk-moderate: #f59e0b;
+            --risk-elevated: #ef4444;
+            --risk-critical: #7f1d1d;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 50%);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            z-index: 10;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        header .subtitle {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Glass Card Base */
+        .glass-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area {
+            text-align: center;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            padding: 60px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .upload-area .icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .btn-demo {
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .btn-demo:hover {
+            background: #334155;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-hero {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-stat .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .hero-stat .val {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .risk-tag {
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 1px solid;
+            display: inline-block;
+        }
+
+        .analysis-box {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
+            border-radius: 0 16px 16px 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .forensic-line {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .forensic-line::before {
+            content: "→";
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        /* Logic bars */
+        .logic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logic-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        /* Loading Animation */
+        #loader {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .scan-line {
+            height: 2px;
+            background: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+            width: 0%;
+            transition: width 10s linear;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .logic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="main-container">
+        <header>
+            <div class="subtitle">Next-Gen Forensic Auditing</div>
+            <h1>The Honest Recruiter</h1>
+        </header>
+
+        <!-- Initial State: Upload -->
+        <div class="glass-card" id="upload-panel">
+            <form id="uploadForm">
+                <div
+                    style="margin-bottom: 30px; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div
+                        style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 16px; font-weight: 800; display: flex; align-items: center; justify-content: space-between;">
+                        <span>🎯 Strict Role Calibration <span
+                                style="color: #64748b; font-weight: 500; font-size: 0.65rem;">(Optional)</span></span>
+                        <span
+                            style="background: rgba(16,185,129,0.1); color: var(--accent); padding: 3px 8px; border-radius: 4px; font-size: 0.55rem; letter-spacing: 0.05em; border: 1px solid rgba(16,185,129,0.2);">Powered
+                            by Gemini</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                        <input type="text" name="target_role" placeholder="Target Role (e.g. Sr. Backend Engineer)"
+                            style="width: 100%; padding: 14px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid var(--border); font-family: var(--font-main); font-size: 0.9rem; transition: border-color 0.2s;">
+
+                        <input type="text" name="must_have_skills"
+                            placeholder="Must-Have Skills (e.g. Python, AWS, Docker)"
+                            style="width: 100%; padding: 14px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid var(--border); font-family: var(--font-main); font-size: 0.9rem; transition: border-color 0.2s;">
+                    </div>
+
+                    <textarea name="job_description"
+                        placeholder="Paste Full Job Description... (The AI Extraction Engine will automatically compile strict technical requirements to calculate Role Fit)"
+                        style="width: 100%; height: 90px; padding: 14px; border-radius: 10px; background: rgba(0,0,0,0.4); color: #cbd5e1; border: 1px solid var(--border); font-family: var(--font-main); font-size: 0.85rem; resize: none; transition: border-color 0.2s; line-height: 1.5;"></textarea>
+                </div>
+
+                <div class="upload-area" onclick="document.getElementById('resume-input').click()">
+                    <span class="icon">📄</span>
+                    <h2 id="file-display">Drag & Drop Resumes (Batch Upload)</h2>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">PDF Format only. Select multiple.</p>
+                    <input type="file" id="resume-input" name="resumes" accept=".pdf" multiple hidden
+                        onchange="updateFileLabel(this)">
+                </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn-primary" id="submit-btn" disabled>Execute Forensic Pulse</button>
+                    <div style="margin-top: 20px;">
+                        <span style="color: #475569; font-size: 0.8rem;">—— OR ——</span>
+                    </div>
+                    <button type="button" class="btn-demo" onclick="runDemo()">⚡ Quick Demo: Software Engineer</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Scanning State -->
+        <div id="loader">
+            <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); margin-bottom: 20px;">
+                FUSING GROUND TRUTH • PARSING LATENT VECTORS • DETECTING INFLATION
+            </div>
+            <div class="scan-line" id="p-bar"></div>
+        </div>
+
+        <!-- Dashboard Result Position -->
+        <div id="dashboard-target"></div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const submitBtn = document.getElementById('submit-btn');
+        const fileDisplay = document.getElementById('file-display');
+        const loader = document.getElementById('loader');
+        const uploadPanel = document.getElementById('upload-panel');
+        const target = document.getElementById('dashboard-target');
+
+        function updateFileLabel(input) {
+            if (input.files.length > 0) {
+                const count = input.files.length;
+                fileDisplay.textContent = count === 1 ? input.files[0].name : `${count} resumes selected`;
+                submitBtn.disabled = false;
+            }
+        }
+
+        uploadForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(uploadForm);
+            startScanMode();
+
+            try {
+                // No timeout needed for bulk as it might take time, or we can increase it.
+                const response = await fetch('/scan', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                let result;
+                try {
+                    result = await response.json();
+                } catch {
+                    showError("Server returned an unexpected response. Please retry.");
+                    return;
+                }
+
+                if (!response.ok || !result.success) {
+                    showError(result.error || "Analysis failed. Please try again.");
+                    return;
+                }
+
+                if (result.redirect_url) {
+                    window.location.href = result.redirect_url;
+                } else {
+                    showError("No redirect URL provided by server.");
+                }
+
+            } catch (err) {
+                console.error("Scan Error:", err);
+                showError("Analysis service temporarily unavailable. Please retry.");
+            }
+        };
+
+
+        async function runDemo() {
+            startScanMode();
+            const response = await fetch('/scan/demo');
+            const result = await response.json();
+            renderDashboard(result.data, result.meta);
+        }
+
+        function startScanMode() {
+            uploadPanel.style.display = 'none';
+            loader.style.display = 'block';
+            document.getElementById('p-bar').style.width = '100%';
+        }
+
+        function renderDashboard(data, meta) {
+            loader.style.display = 'none';
+            const hi = data.hiring_intelligence;
+            const verdict = hi.verdict;
+            const core = hi.core_metrics;
+            const match = hi.role_match || { is_evaluated: false };
+
+            // Format metrics
+            const trustScore = core ? core.trust_score.toFixed(0) + '%' : 'N/A';
+            const evidenceStrength = core ? core.evidence_strength : 'Unknown';
+            const roleMatchScore = match.is_evaluated ? match.match_score + '%' : '--';
+
+            const matchColor = match.is_evaluated ? (match.match_score < 40 ? '#ef4444' : match.match_score > 70 ? '#10b981' : '#f59e0b') : '#888';
+            const trustColor = core ? (core.trust_score > 70 ? '#10b981' : core.trust_score > 30 ? '#f59e0b' : '#ef4444') : '#888';
+            const evColor = core ? (core.evidence_strength === 'Strong' ? '#10b981' : core.evidence_strength === 'Moderate' ? '#f59e0b' : '#ef4444') : '#888';
+
+            // ══════ FORENSIC VERIFICATION SIGNALS CARD ══════
+            let verificationCardHtml = '';
+            const sa = hi.structured_analysis;
+            if (sa) {
+                const pos = Array.isArray(sa.positive_indicators) ? sa.positive_indicators : [];
+                const neg = Array.isArray(sa.negative_indicators) ? sa.negative_indicators : [];
+                const impactColor = v => v === 'Positive' ? '#10b981' : v === 'Negative' ? '#ef4444' : '#f59e0b';
+                const impactBg = v => v === 'Positive' ? 'rgba(16,185,129,0.15)' : v === 'Negative' ? 'rgba(239,68,68,0.15)' : 'rgba(245,158,11,0.15)';
+                const impactBorder = v => v === 'Positive' ? 'rgba(16,185,129,0.3)' : v === 'Negative' ? 'rgba(239,68,68,0.3)' : 'rgba(245,158,11,0.3)';
+                const sevColor = s => s === 'High' ? '#ef4444' : s === 'Moderate' ? '#f59e0b' : '#94a3b8';
+                const sevBg = s => s === 'High' ? 'rgba(239,68,68,0.15)' : s === 'Moderate' ? 'rgba(245,158,11,0.15)' : 'rgba(100,116,139,0.15)';
+                const sevBorder = s => s === 'High' ? 'rgba(239,68,68,0.3)' : s === 'Moderate' ? 'rgba(245,158,11,0.3)' : 'rgba(100,116,139,0.3)';
+                const tHead = `<thead><tr>
+                    <th style="padding:10px 16px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;border-bottom:2px solid rgba(255,255,255,0.1);">Signal</th>
+                    <th style="padding:10px 16px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;border-bottom:2px solid rgba(255,255,255,0.1);">Source</th>
+                    <th style="padding:10px 16px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;border-bottom:2px solid rgba(255,255,255,0.1);">Impact</th>
+                    <th style="padding:10px 16px;text-align:left;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;border-bottom:2px solid rgba(255,255,255,0.1);">Severity</th>
+                </tr></thead>`;
+                const buildRows = (items, isPos) => items.map(item => `<tr>
+                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="color:${isPos ? '#10b981' : '#ef4444'};font-weight:800;margin-right:6px;">${isPos ? '\u2713' : '\u26a0'}</span>
+                        <span style="font-weight:600;color:#f1f5f9;">${item.signal}</span></td>
+                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);font-family:var(--font-mono);font-size:0.75rem;color:#94a3b8;">${item.evidence_source}</td>
+                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="padding:3px 10px;border-radius:100px;font-size:0.65rem;font-weight:700;background:${impactBg(item.impact)};color:${impactColor(item.impact)};border:1px solid ${impactBorder(item.impact)};">${item.impact}</span></td>
+                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <span style="padding:3px 10px;border-radius:100px;font-size:0.65rem;font-weight:700;background:${sevBg(item.severity)};color:${sevColor(item.severity)};border:1px solid ${sevBorder(item.severity)};">${item.severity}</span></td>
+                </tr>`).join('');
+                let snapshotHtml = '';
+                if (sa.summary_snapshot) {
+                    const snap = sa.summary_snapshot;
+                    const riskCol = snap.overall_risk_level === 'High' ? '#ef4444' : snap.overall_risk_level === 'Elevated' ? '#f97316' : snap.overall_risk_level === 'Moderate' ? '#f59e0b' : '#10b981';
+                    snapshotHtml = `<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-top:20px;">
+                        <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;margin-bottom:6px;">Risk Level</div>
+                            <div style="font-size:1.1rem;font-weight:800;color:${riskCol};">${snap.overall_risk_level}</div></div>
+                        <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;margin-bottom:6px;">Capability</div>
+                            <div style="font-size:1.1rem;font-weight:800;color:#e2e8f0;">${snap.capability_certainty}</div></div>
+                        <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;margin-bottom:6px;">Digital Depth</div>
+                            <div style="font-size:1.1rem;font-weight:800;color:#e2e8f0;">${snap.digital_depth_rating}</div></div>
+                        <div style="background:rgba(0,0,0,0.3);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;margin-bottom:6px;">Action</div>
+                            <div style="font-size:0.8rem;font-weight:800;color:var(--accent);">${snap.recommended_action}</div></div>
+                    </div>`;
+                }
+                verificationCardHtml = `<div class="glass-card" style="border-top:3px solid var(--accent);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);"></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <div>
+                            <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.25em;color:var(--accent);font-weight:800;margin-bottom:4px;">&#128269; Forensic Verification Signals</div>
+                            <div style="font-size:0.7rem;color:#64748b;">Cross-reference analysis of resume claims vs external evidence</div>
+                        </div>
+                        <div style="font-family:var(--font-mono);font-size:0.6rem;color:#334155;background:rgba(16,185,129,0.1);padding:4px 10px;border-radius:6px;border:1px solid rgba(16,185,129,0.2);">${pos.length + neg.length} SIGNALS</div>
+                    </div>
+                    ${pos.length > 0 ? `<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#10b981;font-weight:700;margin-bottom:8px;">&#10003; Positive Indicators</div><table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:0.82rem;">${tHead}<tbody>${buildRows(pos, true)}</tbody></table>` : ''}
+                    ${neg.length > 0 ? `<div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#ef4444;font-weight:700;margin-bottom:8px;">&#9888; Risk / Negative Indicators</div><table style="width:100%;border-collapse:collapse;margin-bottom:10px;font-size:0.82rem;">${tHead}<tbody>${buildRows(neg, false)}</tbody></table>` : ''}
+                    ${snapshotHtml}
+
+                    <!-- EXPANDABLE DETAILED FORENSIC REPORT -->
+                    <div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.07);padding-top:16px;">
+                        <div id="forensic-toggle" onclick="document.getElementById('forensic-detail').style.display=document.getElementById('forensic-detail').style.display==='none'?'block':'none';this.querySelector('.arrow').textContent=this.querySelector('.arrow').textContent==='▼'?'▲':'▼';"
+                            style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:12px 16px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:8px;transition:background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.12)'" onmouseout="this.style.background='rgba(16,185,129,0.06)'">
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <span style="color:var(--accent);font-size:0.9rem;">&#9636;</span>
+                                <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent);">View Detailed Forensic AI Analysis</span>
+                            </div>
+                            <span class="arrow" style="color:var(--accent);font-size:0.8rem;">&#9660;</span>
+                        </div>
+
+                        <div id="forensic-detail" style="display:none;margin-top:16px;">
+
+                            <!-- LIVE FORENSIC NARRATIVE -->
+                            ${(() => {
+                        const fr = data.forensic_report || {};
+                        const verdictLines = hi.verdict.verdict_lines || [];
+                        const aiNarrative = verdictLines.find(l => l.startsWith('AI FORENSIC ANALYSIS')) || fr.honest_narrative || '';
+                        return aiNarrative ? `
+                                <div style="margin-bottom:20px;">
+                                    <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                                        <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+                                        Live Forensic Narrative
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.3);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;font-size:0.83rem;line-height:1.9;color:#cbd5e1;">${aiNarrative}</div>
+                                </div>` : '';
+                    })()}
+
+                            <!-- GROQ GITHUB DEEP ANALYSIS -->
+                            ${(() => {
+                        const ga = data.github_analysis || {};
+                        if (!ga.available) return ga.error ? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:14px 18px;margin-bottom:14px;font-size:0.78rem;color:#94a3b8;">&#9888; GitHub AI Analysis: ${ga.error}</div>` : '';
+                        const ts = ga.technical_stack_assessment || {};
+                        const pq = ga.project_quality || {};
+                        const aa = ga.activity_assessment || {};
+                        const rf = ga.red_flags || [];
+                        const gf = ga.green_flags || [];
+                        const rec = ga.github_hiring_recommendation || {};
+                        const ss = 'background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 20px;margin-bottom:14px;';
+                        const ls = 'font-size:0.55rem;text-transform:uppercase;letter-spacing:0.14em;color:#64748b;margin-bottom:5px;font-weight:700;';
+                        const vs = 'font-size:0.88rem;color:#f1f5f9;font-weight:600;';
+                        const verdictCol = rec.verdict === 'Strong Candidate' ? '#10b981' : rec.verdict === 'High Risk' ? '#ef4444' : '#f59e0b';
+
+                        return `
+                                <!-- GitHub Profile Header -->
+                                <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+                                    <div style="display:flex;align-items:center;gap:12px;">
+                                        <span style="font-size:1.3rem;">&#128025;</span>
+                                        <div>
+                                            <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);font-weight:700;margin-bottom:3px;">&#128204; Groq GitHub Forensic Analysis</div>
+                                            <div style="font-size:0.78rem;color:#94a3b8;">AI-powered deep-dive of <span style="color:#f1f5f9;font-weight:600;">${ga.handle || 'candidate'}</span>'s GitHub profile</div>
+                                        </div>
+                                    </div>
+                                    ${ga.profile_url ? `<a href="${ga.profile_url}" target="_blank" style="font-size:0.7rem;color:var(--accent);text-decoration:none;border:1px solid rgba(16,185,129,0.3);padding:5px 12px;border-radius:6px;">View Profile &#8594;</a>` : ''}
+                                </div>
+
+                                <!-- Technical Stack Assessment -->
+                                ${ts.verified_from_github ? `<div style="${ss}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128187; Technical Stack Assessment</div>
+                                    <div style="font-size:0.82rem;color:#94a3b8;line-height:1.7;margin-bottom:12px;">${ts.verified_from_github}</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                                        ${ts.verified_languages && ts.verified_languages.length ? `<div><div style="${ls}">Verified Languages</div><div style="display:flex;flex-wrap:wrap;gap:4px;">${ts.verified_languages.map(l => `<span style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:4px;padding:2px 8px;font-size:0.65rem;color:#10b981;">${l}</span>`).join('')}</div></div>` : ''}
+                                        ${ts.declared_but_unverified && ts.declared_but_unverified.length ? `<div><div style="${ls}">Declared, Not Evidenced</div><div style="display:flex;flex-wrap:wrap;gap:4px;">${ts.declared_but_unverified.map(l => `<span style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:4px;padding:2px 8px;font-size:0.65rem;color:#ef4444;">${l}</span>`).join('')}</div></div>` : ''}
+                                        ${ts.github_exclusive_skills && ts.github_exclusive_skills.length ? `<div><div style="${ls}">GitHub Only (Not in Resume)</div><div style="display:flex;flex-wrap:wrap;gap:4px;">${ts.github_exclusive_skills.map(l => `<span style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:4px;padding:2px 8px;font-size:0.65rem;color:#f59e0b;">${l}</span>`).join('')}</div></div>` : ''}
+                                    </div>
+                                </div>` : ''}
+
+                                <!-- Project Quality + Activity Row -->
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                                    ${pq.quality_verdict ? `<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 20px;">
+                                        <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128218; Project Quality</div>
+                                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                                            <div><div style="${ls}">Original Repos</div><div style="${vs}">${pq.original_repos || 0}</div></div>
+                                            <div><div style="${ls}">Forked Repos</div><div style="${vs}">${pq.forked_repos || 0}</div></div>
+                                            <div><div style="${ls}">Documented</div><div style="${vs}">${pq.documented_repos || 0}</div></div>
+                                            <div><div style="${ls}">Avg Stars</div><div style="${vs}">${typeof pq.average_star_rating === 'number' ? pq.average_star_rating.toFixed(1) : '0.0'}</div></div>
+                                        </div>
+                                        <div style="margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px;font-size:0.75rem;color:#94a3b8;">${pq.quality_notes || ''}</div>
+                                        <div style="margin-top:8px;font-size:0.75rem;font-weight:700;color:${pq.quality_verdict === 'Strong' ? '#10b981' : pq.quality_verdict === 'Moderate' ? '#f59e0b' : '#ef4444'};">Verdict: ${pq.quality_verdict}</div>
+                                    </div>` : ''}
+                                    ${aa.consistency_verdict ? `<div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 20px;">
+                                        <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128200; Activity Assessment</div>
+                                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                                            <div><div style="${ls}">Last Activity</div><div style="${vs}">${aa.last_activity_days || '?'}d ago</div></div>
+                                            <div><div style="${ls}">Activity Score</div><div style="${vs}">${aa.activity_score || 0}/100</div></div>
+                                        </div>
+                                        <div style="margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px;font-size:0.75rem;color:#94a3b8;">${aa.consistency_notes || ''}</div>
+                                        <div style="margin-top:8px;font-size:0.75rem;font-weight:700;color:${aa.consistency_verdict === 'Active' ? '#10b981' : aa.consistency_verdict === 'Sporadic' ? '#f59e0b' : '#ef4444'};">Verdict: ${aa.consistency_verdict}</div>
+                                    </div>` : ''}
+                                </div>
+
+                                <!-- Red + Green Flags -->
+                                ${(rf.length || gf.length) ? `<div style="${ss}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#9872; Signal Flags</div>
+                                    ${gf.length ? `<div style="margin-bottom:10px;"><div style="font-size:0.6rem;text-transform:uppercase;color:#10b981;font-weight:700;margin-bottom:6px;">&#10003; Green Flags</div>
+                                    ${gf.map(g => `<div style="display:flex;gap:8px;padding:7px 10px;background:rgba(16,185,129,0.06);border-left:2px solid #10b981;border-radius:0 6px 6px 0;margin-bottom:5px;">
+                                        <span style="font-size:0.75rem;color:#cbd5e1;">${g.evidence}</span>
+                                        <span style="margin-left:auto;font-size:0.6rem;color:#10b981;font-weight:700;white-space:nowrap;">${g.strength}</span></div>`).join('')}</div>` : ''}
+                                    ${rf.length ? `<div><div style="font-size:0.6rem;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:6px;">&#9888; Red Flags</div>
+                                    ${rf.map(r => `<div style="display:flex;gap:8px;padding:7px 10px;background:rgba(239,68,68,0.06);border-left:2px solid ${r.severity === 'High' ? '#ef4444' : r.severity === 'Moderate' ? '#f59e0b' : '#94a3b8'};border-radius:0 6px 6px 0;margin-bottom:5px;">
+                                        <span style="font-size:0.75rem;color:#cbd5e1;">${r.flag}</span>
+                                        <span style="margin-left:auto;font-size:0.6rem;color:${r.severity === 'High' ? '#ef4444' : r.severity === 'Moderate' ? '#f59e0b' : '#94a3b8'};font-weight:700;white-space:nowrap;">${r.severity}</span></div>`).join('')}</div>` : ''}
+                                </div>` : ''}
+
+                                <!-- GitHub Hiring Recommendation -->
+                                ${rec.verdict ? `<div style="background:rgba(16,185,129,0.06);border:2px solid rgba(16,185,129,0.2);border-radius:10px;padding:18px 20px;">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);font-weight:700;margin-bottom:10px;">&#9899; GitHub-Based Hiring Recommendation</div>
+                                    <div style="font-size:1rem;font-weight:800;color:${verdictCol};margin-bottom:10px;">${rec.verdict}</div>
+                                    <div style="font-size:0.82rem;color:#94a3b8;line-height:1.7;margin-bottom:14px;">${rec.reason}</div>
+                                    ${rec.interview_questions && rec.interview_questions.length ? `
+                                    <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;font-weight:700;margin-bottom:8px;">&#127942; Recommended Interview Questions</div>
+                                    ${rec.interview_questions.map((q, i) => `<div style="display:flex;gap:10px;padding:9px 12px;background:rgba(0,0,0,0.3);border-radius:6px;margin-bottom:6px;">
+                                        <span style="color:var(--accent);font-weight:800;flex-shrink:0;">${i + 1}.</span>
+                                        <div style="font-size:0.78rem;color:#e2e8f0;">${q}</div></div>`).join('')}` : ''}
+                                </div>` : ''}`;
+                    })()}
+
+                            <!-- BREAKDOWN SECTIONS -->
+
+                            ${(() => {
+                        const fr = data.forensic_report || {};
+                        const ic = fr.identity_check || {};
+                        const et = fr.experience_timeline_check || {};
+                        const sv = fr.skill_verification || {};
+                        const df = fr.digital_footprint || {};
+                        const fs = fr.final_hiring_signal || {};
+
+                        const sectionStyle = 'background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 20px;margin-bottom:14px;';
+                        const labelStyle = 'font-size:0.55rem;text-transform:uppercase;letter-spacing:0.14em;color:#64748b;margin-bottom:6px;font-weight:700;';
+                        const valStyle = 'font-size:0.88rem;color:#f1f5f9;font-weight:600;';
+
+                        let html = '';
+
+                        // Identity Check
+                        if (ic.verdict) html += `<div style="${sectionStyle}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128100; Identity Check</div>
+                                    <div style="${valStyle}">${ic.verdict}</div>
+                                    ${(ic.signals || []).map(s => `<div style="margin-top:6px;font-size:0.78rem;color:#64748b;">&#10003; ${s}</div>`).join('')}
+                                </div>`;
+
+                        // Experience Timeline
+                        if (et.structured_history) html += `<div style="${sectionStyle}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128197; Experience Timeline</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                        <div><div style="${labelStyle}">Work History</div><div style="${valStyle}">${et.structured_history}</div></div>
+                                        <div><div style="${labelStyle}">Claimed Experience</div><div style="${valStyle}">${et.claimed_experience || 'N/A'}</div></div>
+                                        <div><div style="${labelStyle}">Gaps Detected</div><div style="${valStyle};color:${et.gaps_detected === 'Yes' ? '#f59e0b' : '#10b981'}">${et.gaps_detected}</div></div>
+                                        <div><div style="${labelStyle}">Recommendation</div><div style="${valStyle};font-size:0.75rem;">${et.recommendation}</div></div>
+                                    </div>
+                                </div>`;
+
+                        // Skill Verification
+                        if (sv.declared_skills !== undefined) html += `<div style="${sectionStyle}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#128161; Skill Verification</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                                        <div><div style="${labelStyle}">Declared Skills</div><div style="${valStyle}">${sv.declared_skills}</div></div>
+                                        <div><div style="${labelStyle}">Evidenced in Work History</div><div style="${valStyle}">${sv.demonstrated_skills}</div></div>
+                                    </div>
+                                    <div style="font-size:0.78rem;color:#94a3b8;margin-bottom:8px;">${sv.verdict}</div>
+                                    ${(sv.insights || []).map(i => `<div style="font-size:0.75rem;color:#64748b;margin-top:4px;">• ${i}</div>`).join('')}
+                                    <div style="margin-top:12px;padding:10px 14px;background:rgba(16,185,129,0.08);border-radius:6px;border:1px solid rgba(16,185,129,0.15);font-size:0.75rem;color:var(--accent);">&#127919; Interview Focus: ${sv.interview_focus}</div>
+                                </div>`;
+
+                        // Digital Footprint
+                        if (df.github_activity) html += `<div style="${sectionStyle}">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#818cf8;font-weight:700;margin-bottom:12px;">&#127758; Digital Footprint</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                        <div><div style="${labelStyle}">GitHub Activity</div><div style="${valStyle}">${df.github_activity}</div></div>
+                                        <div><div style="${labelStyle}">Profile Depth</div><div style="${valStyle}">${df.linked_profile_depth}</div></div>
+                                        <div><div style="${labelStyle}">External Portfolio</div><div style="${valStyle};color:#64748b;">${df.external_portfolio}</div></div>
+                                    </div>
+                                    <div style="margin-top:10px;font-size:0.75rem;color:#475569;">${df.context}</div>
+                                </div>`;
+
+                        // Final Hiring Signal
+                        if (fs.verdict) html += `<div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:16px 20px;">
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);font-weight:700;margin-bottom:12px;">&#9899; Final Hiring Signal</div>
+                                    <div style="font-size:0.9rem;font-weight:700;color:#f1f5f9;margin-bottom:14px;">${fs.verdict}</div>
+                                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
+                                        <div><div style="${labelStyle}">Trust Score</div><div style="${valStyle}">${fs.trust_score}%</div></div>
+                                        <div><div style="${labelStyle}">Evidence Strength</div><div style="${valStyle}">${fs.evidence_strength}</div></div>
+                                        <div><div style="${labelStyle}">Fraud Risk</div><div style="${valStyle};color:${fs.fraud_risk === 'High' ? '#ef4444' : fs.fraud_risk === 'Moderate' ? '#f59e0b' : '#10b981'}">${fs.fraud_risk}</div></div>
+                                    </div>
+                                    <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:#64748b;margin-bottom:8px;font-weight:700;">Recruiter Actions</div>
+                                    ${(fs.recruiter_action || []).map((a, i) => `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(0,0,0,0.3);border-radius:6px;margin-bottom:6px;font-size:0.78rem;color:#e2e8f0;">
+                                        <span style="color:var(--accent);font-weight:800;">${i + 1}.</span>${a}</div>`).join('')}
+                                </div>`;
+
+                        return html;
+                    })()}
+
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            // ══════ ML PREDICTION BULLETS (SEPARATE SECTION) ══════
+            const verdictHtml = verdict.verdict_lines.map(line => `
+                <div class="forensic-line">${line}</div>
+            `).join('');
+
+            target.innerHTML = `
+                <div class="dashboard-hero">
+                    <div class="hero-stat" style="border-top: 3px solid ${trustColor}">
+                        <span class="label">Trust Score</span>
+                        <div class="val" style="color: ${trustColor}">${trustScore}</div>
+                        <div style="margin-top: 15px; font-size: 0.8rem; color: var(--text-secondary)">
+                            Anti-Fraud Assurance
+                        </div>
+                    </div>
+                    <div class="hero-stat" style="border-top: 3px solid ${matchColor}">
+                        <span class="label">Role Fit Score</span>
+                        <div class="val" style="color: ${matchColor}; font-size: ${match.is_evaluated ? '3.5rem' : '2.5rem'}">${roleMatchScore}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 15px;">
+                            ${match.is_evaluated ? match.verdict : 'No Role Selected'} 
+                        </div>
+                    </div>
+                    <div class="hero-stat" style="border-top: 3px solid ${evColor}">
+                        <span class="label">Evidence Strength</span>
+                        <div class="val" style="font-size: 2rem; margin-top: 10px; color: ${evColor}">${evidenceStrength}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 15px;">
+                            Based on technical foot-print
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CANDIDATE NAME HEADER -->
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <h2 style="font-size: 2rem; font-weight: 800;">${data.candidate.name || 'Forensic Subject'}</h2>
+                        <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary);">
+                            SCAN_ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()} &bull; LATENCY: ${meta.execution_time_sec}s
+                        </div>
+                    </div>
+
+                    <!-- LIVE FORENSIC NARRATIVE (Groq AI + GitHub data) -->
+                    ${data.live_narrative ? `
+                    <div style="margin-bottom:28px;">
+                        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                            <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+                            Live Forensic Narrative
+                        </div>
+                        <div style="border-left:3px solid var(--accent);padding:18px 22px;background:rgba(16,185,129,0.04);border-radius:0 8px 8px 0;font-size:0.88rem;line-height:2;color:#cbd5e1;font-weight:400;">
+                            ${data.live_narrative}
+                        </div>
+                    </div>` : ''}
+
+                    <!-- VERDICT BULLET LINES -->
+                    <div>
+                        ${verdict.verdict_lines.filter(l => !l.startsWith('AI FORENSIC')).map(line => `
+                            <div style="display:flex;align-items:flex-start;gap:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+                                <span style="color:var(--accent);flex-shrink:0;margin-top:2px;">&#8594;</span>
+                                <div style="font-size:0.82rem;color:#94a3b8;line-height:1.7;">${line}</div>
+                            </div>`).join('')}
+                    </div>
+
+                    <div class="logic-grid" style="margin-top:20px;">
+                        <div class="logic-card">
+                            <span class="label" style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-secondary);">Digital Maturity</span>
+                            <div style="font-size: 1.2rem; font-weight: 700; margin: 10px 0;">${hi.external_signals.coverage_level}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.7rem;">Verified Platform Signals: ${meta.api_calls_used.length}</div>
+                        </div>
+                        <div class="logic-card">
+                            <span class="label" style="font-size: 0.65rem; text-transform: uppercase; color: var(--text-secondary);">Internal Coherence</span>
+                            <div style="font-size: 1.2rem; font-weight: 700; margin: 10px 0;">${hi.consistency.verdict}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.7rem;">Coherence Score: ${hi.consistency.coherence_score}/100</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VERIFICATION SIGNALS TABLE (SEPARATE, PROMINENT CARD) -->
+                ${verificationCardHtml}
+
+                <!-- FOOTER -->
+                <div class="glass-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-family: var(--font-mono); font-size: 0.6rem; color: #475569;">
+                            SHA-256 Report Anchor: ${meta.timing.total.toString(16)}...${Math.random().toString(16).substr(2, 8)}
+                        </div>
+                        <button class="btn-primary" style="padding: 10px 20px; font-size: 0.75rem;" onclick="location.reload()">New Scan</button>
+                    </div>
+                </div>
+            `;
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(msg) {
+            loader.style.display = 'none';
+            uploadPanel.style.display = 'block';
+            const existing = document.getElementById('error-banner');
+            if (existing) existing.remove();
+            const banner = document.createElement('div');
+            banner.id = 'error-banner';
+            banner.style.cssText = 'margin-top:20px;padding:16px 20px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.35);border-radius:10px;color:#fca5a5;font-size:0.85rem;line-height:1.6;text-align:center;';
+            banner.innerHTML = `<div style="font-size:1.1rem;margin-bottom:6px;">⚠️ Analysis Unavailable</div><div style="color:#e2e8f0;">${msg}</div><button onclick="document.getElementById('error-banner').remove()" style="margin-top:12px;padding:6px 18px;background:rgba(239,68,68,0.25);border:1px solid rgba(239,68,68,0.4);border-radius:6px;color:#fca5a5;cursor:pointer;font-size:0.75rem;">Dismiss</button>`;
+            uploadPanel.appendChild(banner);
+        }
+    </script>
+</body>
+
+</html>

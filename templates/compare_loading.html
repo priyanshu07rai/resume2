@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Analyzing Candidates... • The Honest Recruiter</title>
+    <style>
+        body {
+            background: #030712;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, transparent 50%);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border-left-color: #10b981;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="spinner"></div>
+    <h2>Initiating AI Consensus Comparison...</h2>
+    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 10px;">Comparing profiles, verifying skills, and generating
+        insights.</p>
+    <script>
+        window.onload = function () {
+            const formData = new FormData();
+            formData.append('candidate_1', '{{ c1_id }}');
+            formData.append('candidate_2', '{{ c2_id }}');
+
+            fetch('/api/run_compare', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                })
+                .catch(err => {
+                    document.body.innerHTML = '<div style="text-align: center;"><h2 style="color:#ef4444">Failed to compare candidates.</h2><br><a href="/shortlist" style="color:#10b981">Return to Shortlist</a></div>';
+                });
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Report · The Honest Recruiter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #030712;
+            --surface: rgba(17, 24, 39, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --red: #ef4444;
+            --yellow: #f59e0b;
+            --green: #10b981;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-bar .brand {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .top-bar .back-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .top-bar .back-btn:hover {
+            background: var(--accent-glow);
+        }
+
+        /* HERO */
+        .hero {
+            padding: 3rem 2rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr repeat(4, auto);
+            gap: 1.5rem;
+            align-items: start;
+            margin-bottom: 2.5rem;
+        }
+
+        .candidate-name {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .candidate-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-family: var(--mono);
+        }
+
+        .score-pill {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 24px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .score-pill .sp-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .score-pill .sp-val {
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .score-pill .sp-sub {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-family: var(--mono);
+        }
+
+        /* VERDICT BANNER */
+        .verdict-banner {
+            border-radius: 12px;
+            padding: 20px 28px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .verdict-banner .vb-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .verdict-banner .vb-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 4px;
+        }
+
+        .verdict-banner .vb-verdict {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .verdict-strong {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .verdict-moderate {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        .verdict-weak {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .verdict-high_risk {
+            background: rgba(239, 68, 68, 0.15);
+            border: 2px solid rgba(239, 68, 68, 0.4);
+        }
+
+        /* CARDS */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .card-header {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* EVIDENCE BREAKDOWN */
+        .axis {
+            margin-bottom: 14px;
+        }
+
+        .axis-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .axis-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .axis-val {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .bar-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        /* SIGNAL LISTS */
+        .signal-list {
+            list-style: none;
+        }
+
+        .signal-list li {
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.80rem;
+            line-height: 1.6;
+            display: flex;
+            gap: 10px;
+        }
+
+        .signal-list li .sig-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .sig-contradiction {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .sig-inflation {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .sig-observation {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .sig-interview {
+            background: rgba(16, 185, 129, 0.06);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* INSIGHTS */
+        .insight-row {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: flex-start;
+        }
+
+        .insight-row:last-child {
+            border-bottom: none;
+        }
+
+        .insight-row .arrow {
+            color: var(--accent);
+            flex-shrink: 0;
+            font-weight: 800;
+        }
+
+        .insight-row span {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* HASH FOOTER */
+        .hash-footer {
+            margin-top: 2.5rem;
+            padding: 20px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hash-label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .hash-val {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            color: #64748b;
+            word-break: break-all;
+        }
+
+        /* ERROR */
+        .error-screen {
+            max-width: 540px;
+            margin: 8rem auto;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .error-screen h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .error-screen p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="brand">The Honest Recruiter · Forensic Intelligence v3</div>
+        <a href="/shortlist" class="back-btn">← Back to Shortlist</a>
+    </div>
+
+    {% if error %}
+    <div class="error-screen">
+        <h2>⚠ Report Unavailable</h2>
+        <p>{{ error }}</p>
+        <a href="/shortlist" style="color:var(--accent)">← Return to Shortlist</a>
+    </div>
+    {% else %}
+    <!-- Report is injected by JS from initial_data -->
+    <div id="report-root" style="max-width:1100px; margin:0 auto; padding:2rem 2rem 4rem;"></div>
+    {% endif %}
+
+    <script id="initial-data" type="application/json">
+        {{ initial_data | safe }}
+    </script>
+    <script>
+        const initialDataText = document.getElementById('initial-data').textContent.trim();
+        const initialData = initialDataText ? JSON.parse(initialDataText) : null;
+
+        function barColor(val) {
+            if (val >= 70) return '#10b981';
+            if (val >= 40) return '#f59e0b';
+            return '#ef4444';
+        }
+        function verdictClass(verdict = '') {
+            const v = verdict.toLowerCase().replace(' ', '_');
+            return 'verdict-' + (v || 'moderate');
+        }
+        function verdictIcon(verdict = '') {
+            const v = (verdict || '').toLowerCase();
+            if (v.includes('strong')) return '✅';
+            if (v.includes('high risk')) return '🚨';
+            if (v.includes('weak')) return '⚠️';
+            return '🔍';
+        }
+
+        function render(raw) {
+            if (!raw || !raw.data) {
+                document.getElementById('report-root').innerHTML = '<p style="color:#64748b;padding:4rem;text-align:center;">No report data found.</p>';
+                return;
+            }
+            const d = raw.data;
+            const meta = d.meta || {};
+            const scores = d.scores || {};
+            const roleMatch = d.hiring_intelligence?.role_match || {};
+            const struct = d.ai_analysis || {};
+            let snapshot = struct.summary_snapshot;
+            const consist = struct.internal_coherence || {};
+            const digMat = struct.digital_maturity || {};
+            let narrativeLines = struct.verdict_lines || [];
+
+            let posSignals = (struct.verification_signals || []).filter(s => s.impact === 'Positive');
+            let negSignals = (struct.verification_signals || []).filter(s => s.impact === 'Negative');
+
+            // Legacy schema fallback
+            if (!snapshot && d.hiring_intelligence?.structured_analysis) {
+                const oldStruct = d.hiring_intelligence.structured_analysis;
+                snapshot = oldStruct.summary_snapshot || {};
+                if (posSignals.length === 0) posSignals = oldStruct.positive_indicators || [];
+                if (negSignals.length === 0) negSignals = oldStruct.negative_indicators || [];
+                if (narrativeLines.length === 0) narrativeLines = struct.forensic_observations || struct.inflation_signals || [];
+            } else if (!snapshot) {
+                snapshot = {};
+            }
+
+            const reliability = scores.reliability ?? 50;
+            const roleFit = roleMatch.match_score ?? 0;
+            const roleFitDesc = roleMatch.verdict || 'Moderate Fit';
+            const evidStr = scores.evidence_strength || 'Unknown';
+
+            const scanId = meta.hash ? meta.hash.substring(0, 9).toUpperCase() : 'UNKNOWN';
+
+            function severityPill(sev) {
+                if (sev === 'High') return `<span style="padding:2px 10px; border:1px solid #7f1d1d; background:rgba(239,68,68,0.05); color:#ef4444; border-radius:12px; font-size:0.75rem;">High</span>`;
+                if (sev === 'Moderate') return `<span style="padding:2px 10px; border:1px solid #78350f; background:rgba(245,158,11,0.05); color:#f59e0b; border-radius:12px; font-size:0.75rem;">Moderate</span>`;
+                return `<span style="padding:2px 10px; border:1px solid #334155; background:rgba(148,163,184,0.05); color:#94a3b8; border-radius:12px; font-size:0.75rem;">Low</span>`;
+            }
+
+            const posRowsHtml = posSignals.map(s => `
+                <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem; align-items:center;">
+                    <div style="font-weight:600;"><span style="color:#10b981;margin-right:8px;">✓</span>${s.signal}</div>
+                    <div style="color:var(--text-secondary);font-family:monospace;">${s.evidence_source}</div>
+                    <div><span style="padding:2px 10px; border:1px solid #064e3b; background:rgba(16,185,129,0.05); color:#10b981; border-radius:12px; font-size:0.75rem;">Positive</span></div>
+                    <div>${severityPill(s.severity)}</div>
+                </div>
+            `).join('');
+
+            const negRowsHtml = negSignals.map(s => `
+                <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.9rem; align-items:center;">
+                    <div style="font-weight:600; color:#ef4444;"><span style="margin-right:8px;">⚠</span>${s.signal}</div>
+                    <div style="color:var(--text-secondary);font-family:monospace;">${s.evidence_source}</div>
+                    <div><span style="padding:2px 10px; border:1px solid #7f1d1d; background:rgba(239,68,68,0.05); color:#ef4444; border-radius:12px; font-size:0.75rem;">Negative</span></div>
+                    <div>${severityPill(s.severity)}</div>
+                </div>
+            `).join('');
+
+            const narrativeHtml = narrativeLines.map(line => `
+                <div style="padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display:flex; gap:12px; align-items:flex-start; font-size: 0.95rem; color: #e2e8f0; line-height:1.5;">
+                    <span style="color:#10b981; font-weight:bold; margin-top: -2px;">→</span>
+                    <span>${line}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('report-root').innerHTML = `
+                <!-- TOP 3 METRICS CARDS -->
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+                    <div style="background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.05); border-top: 2px solid #f59e0b; border-radius: 12px; padding: 24px; text-align:center;">
+                        <div style="font-size: 0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-secondary); margin-bottom:12px;">Trust Score</div>
+                        <div style="font-size: 3rem; font-weight:800; color:#fff; margin-bottom:8px; line-height:1;">${reliability}%</div>
+                        <div style="font-size: 0.75rem; color:var(--text-secondary);">Anti-Fraud Assurance</div>
+                    </div>
+                    <div style="background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.05); border-top: 2px solid #ef4444; border-radius: 12px; padding: 24px; text-align:center;">
+                        <div style="font-size: 0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-secondary); margin-bottom:12px;">Role Fit Score</div>
+                        <div style="font-size: 3rem; font-weight:800; color:#fff; margin-bottom:8px; line-height:1;">${roleFit}%</div>
+                        <div style="font-size: 0.75rem; color:var(--text-secondary);">${roleFitDesc}</div>
+                    </div>
+                    <div style="background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.05); border-top: 2px solid #f97316; border-radius: 12px; padding: 24px; text-align:center;">
+                        <div style="font-size: 0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-secondary); margin-bottom:12px;">Evidence Strength</div>
+                        <div style="font-size: 2.2rem; font-weight:800; color:#fff; margin-bottom:8px; line-height:1.2;">${evidStr}</div>
+                        <div style="font-size: 0.75rem; color:var(--text-secondary);">Based on technical foot-print</div>
+                    </div>
+                </div>
+
+                <!-- MAIN MAIN PANEL -->
+                <div style="background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 32px;">
+                    
+                    <!-- Candidate Name Header -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+                        <h1 style="font-size: 2.2rem; font-weight:900; color:#fff; margin:0; letter-spacing:-0.5px;">${meta.name ? meta.name.toUpperCase() : 'UNKNOWN CANDIDATE'}</h1>
+                        <div style="font-family:monospace; font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase;">
+                            SCAN_ID: ${scanId} &bull; LATENCY: 23.2s
+                        </div>
+                    </div>
+
+                    <!-- ML PREDICTION NARRATIVE -->
+                    <div style="border-left: 2px solid #10b981; padding-left: 20px; margin-bottom: 32px;">
+                        <div style="font-size:0.65rem; font-weight:800; letter-spacing:0.15em; color:#10b981; text-transform:uppercase; margin-bottom:16px;">ML Prediction Narrative</div>
+                        <div style="margin-bottom:8px;">
+                            ${narrativeHtml}
+                        </div>
+                    </div>
+
+                    <!-- 2-COLUMN MATURITY / COHERENCE -->
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px;">
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 24px;">
+                            <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:10px;">Digital Maturity</div>
+                            <div style="font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:6px;">${digMat.rating || 'Unknown'}</div>
+                            <div style="font-size:0.8rem; color:var(--text-secondary);">Verified Platform Signals: ${digMat.verified_platform_signals || 0}</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 24px;">
+                            <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:10px;">Internal Coherence</div>
+                            <div style="font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:6px;">${consist.rating || 'Unknown'}</div>
+                            <div style="font-size:0.8rem; color:var(--text-secondary);">Coherence Score: ${consist.score || 0}/100</div>
+                        </div>
+                    </div>
+
+                    <!-- FORENSIC VERIFICATION SIGNALS -->
+                    <div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding:0; margin-bottom: 32px;">
+                        <!-- Table header area -->
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; padding: 20px 24px; border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <div>
+                                <div style="font-size:0.8rem; font-weight:800; letter-spacing:0.15em; color:#38bdf8; text-transform:uppercase; display:flex; align-items:center; gap:8px;">
+                                    <span>🔍</span> FORENSIC VERIFICATION SIGNALS
+                                </div>
+                                <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:6px;">AI-powered cross-reference analysis of resume claims vs external evidence</div>
+                            </div>
+                            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:6px 16px; font-size:0.7rem; color:var(--text-secondary); border-radius:100px; font-weight:bold;">
+                                ${posSignals.length + negSignals.length} SIGNALS
+                            </div>
+                        </div>
+
+                        <!-- Table Body -->
+                        <div style="padding: 24px;">
+                            <!-- POSITIVE -->
+                            <div style="font-size:0.75rem; font-weight:800; letter-spacing:0.1em; color:#10b981; margin-bottom:16px;">✓ POSITIVE INDICATORS</div>
+                            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; font-size:0.65rem; font-weight:800; letter-spacing:0.15em; color:var(--text-secondary); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:10px;">
+                                <div>Signal</div><div>Source</div><div>Impact</div><div>Severity</div>
+                            </div>
+                            ${posRowsHtml || '<div style="padding:10px 0; font-size:0.85rem; color:var(--text-secondary);">No positive signals found.</div>'}
+                            
+                            <!-- NEGATIVE -->
+                            <div style="font-size:0.75rem; font-weight:800; letter-spacing:0.1em; color:#ef4444; margin-top:32px; margin-bottom:16px;">⚠ RISK / NEGATIVE INDICATORS</div>
+                            <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; font-size:0.65rem; font-weight:800; letter-spacing:0.15em; color:var(--text-secondary); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px; margin-bottom:10px;">
+                                <div>Signal</div><div>Source</div><div>Impact</div><div>Severity</div>
+                            </div>
+                            ${negRowsHtml || '<div style="padding:10px 0; font-size:0.85rem; color:var(--text-secondary);">No negative signals found.</div>'}
+                        </div>
+
+                        <!-- Snapshot Footer -->
+                        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; padding: 24px; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.15); border-radius: 0 0 12px 12px;">
+                            <div>
+                                <div style="font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:8px;">Risk Level</div>
+                                <div style="font-size:1.15rem; font-weight:900; color:${snapshot.overall_risk_level === 'High' ? '#ef4444' : '#10b981'};">${snapshot.overall_risk_level || 'Unknown'}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:8px;">Capability</div>
+                                <div style="font-size:1.15rem; font-weight:900; color:#fff;">${snapshot.capability_certainty || 'Unknown'}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:8px;">Digital Depth</div>
+                                <div style="font-size:1.15rem; font-weight:900; color:#fff;">${snapshot.digital_depth_rating || 'Unknown'}</div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:8px;">Action</div>
+                                <div style="font-size:0.95rem; font-weight:800; color:#10b981;">${snapshot.recommended_action || 'Unknown'}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LIVE FORENSIC NARRATIVE -->
+                    <div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px;">
+                        <input type="checkbox" id="narrativeToggle" style="display:none;" />
+                        <label for="narrativeToggle" style="display:flex; justify-content:space-between; align-items:center; padding: 18px 24px; cursor:pointer;">
+                            <span style="font-size: 0.75rem; font-weight:800; letter-spacing:0.15em; color:#10b981; text-transform:uppercase;">📄 View Detailed Forensic AI Analysis</span>
+                            <span style="font-size:1.2rem; color:var(--text-secondary);">▼</span>
+                        </label>
+                        <div id="narrativeContent" style="padding: 0 24px 24px 24px; font-size:0.95rem; color:#cbd5e1; line-height:1.8; display:none; border-top:1px solid rgba(255,255,255,0.05); margin-top:0; padding-top:20px;">
+                            <span style="color:#fff; font-weight:bold;">AI FORENSIC ANALYSIS:</span> ${struct.full_verdict || 'No detailed analysis provided.'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add tiny script trick for the CSS-only toggle
+            const toggle = document.getElementById('narrativeToggle');
+            if (toggle) {
+                toggle.addEventListener('change', function (e) {
+                    document.getElementById('narrativeContent').style.display = e.target.checked ? 'block' : 'none';
+                });
+            }
+        }
+
+        if (initialData) {
+            render(initialData);
+        } else {
+            document.getElementById('report-root').innerHTML = `
+        <div class="error-screen">
+            <h2>⚠ Report Unavailable</h2>
+            <p>No data was injected for this report. The candidate may not have been scanned yet.</p>
+            <a href="/shortlist" style="color:var(--accent)">← Return to Shortlist</a>
+        </div>`;
+        }
+    </script>
+
+</body>
+
+</html>

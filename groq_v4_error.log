@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "C:\Users\raipr\OneDrive\Desktop\resume\ai_consensus_engine.py", line 316, in generate_forensic_reasoning_v4
+    completion = groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+    ...<5 lines>...
+        top_p=0.8
+    )
+  File "C:\Users\raipr\anaconda3\Lib\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\raipr\anaconda3\Lib\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\raipr\anaconda3\Lib\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kfev2v8yf9wr8g07w54hxajg` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99959, Requested 661. Please try again in 8m55.679999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}

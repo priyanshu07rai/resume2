@@ -1,0 +1,35 @@
+# Environment variables (NEVER commit real API keys)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads / temp files
+uploads/
+*.tmp
+
+# Large data files (too big for GitHub)
+training_data.csv
+*.csv
+candidates.db
+reports/
+*.pkl
