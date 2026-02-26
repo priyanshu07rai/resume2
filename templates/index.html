@@ -445,7 +445,7 @@
                     <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">
                         <span style="color:${isPos ? '#10b981' : '#ef4444'};font-weight:800;margin-right:6px;">${isPos ? '\u2713' : '\u26a0'}</span>
                         <span style="font-weight:600;color:#f1f5f9;">${item.signal}</span></td>
-                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);font-family:var(--font-mono);font-size:0.75rem;color:#94a3b8;">${item.evidence_source}</td>
+                    <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);font-family:var(--font-mono);font-size:0.75rem;color:#94a3b8;">${item.evidence_source || item.source || 'Unknown'}</td>
                     <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">
                         <span style="padding:3px 10px;border-radius:100px;font-size:0.65rem;font-weight:700;background:${impactBg(item.impact)};color:${impactColor(item.impact)};border:1px solid ${impactBorder(item.impact)};">${item.impact}</span></td>
                     <td style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);">

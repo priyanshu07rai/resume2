@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live AI Interview | Deep Forensic Engine</title>
+    <!-- Use the existing premium CSS -->
+    <link rel="stylesheet" href="/static/css/interview.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Extra structural overrides mapped to strict states */
+
+        .dashboard-wrapper {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        #startScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            margin-top: 2rem;
+        }
+
+        #startScreen h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        #startScreen p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        .pill-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .status-pill {
+            background: rgba(48, 54, 61, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-pill i {
+            font-size: 1rem;
+        }
+
+        #startBtn {
+            padding: 1.2rem 3.5rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        #startBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+        }
+
+        /* Active Interview State */
+        #interviewScreen {
+            display: none;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .speech-output {
+            min-height: 110px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .speech-output.listening {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .speech-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .speech-controls button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .speech-controls button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .speech-controls button:not(:disabled):active {
+            transform: scale(0.98);
+        }
+
+        #startSpeechBtn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        #stopSpeechBtn {
+            background: #374151;
+            color: white;
+            border: 1px solid var(--border-color);
+        }
+
+        #submitAnswerBtn {
+            background: #10b981;
+            color: white;
+            margin-left: auto;
+        }
+
+        .end-interview-wrapper {
+            margin-top: 1rem;
+        }
+
+        #endSessionBtn {
+            width: 100%;
+            background: rgba(248, 81, 73, 0.1);
+            color: var(--danger-color);
+            border: 1px solid rgba(248, 81, 73, 0.3);
+            transition: all 0.2s;
+        }
+
+        #endSessionBtn:hover:not(:disabled) {
+            background: rgba(248, 81, 73, 0.2);
+            color: #ff7b72;
+        }
+
+        .hidden-hash {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="candidate-hash" class="hidden-hash">{{ candidate_hash }}</div>
+
+    <div class="dashboard dashboard-wrapper">
+        <!-- Persistent Header -->
+        <header class="header">
+            <div>
+                <h1>Deep AI Interviewer</h1>
+                <p class="subtitle">Behavioral & Technical Forensic Engine</p>
+            </div>
+            <div class="session-info">
+                Candidate: <span style="color:#58a6ff">{{ candidate_hash }}</span>
+            </div>
+        </header>
+
+        <!-- STATE 1: IDLE / START SCREEN -->
+        <div id="startScreen">
+            <div style="font-size:4rem; margin-bottom:1rem;">🎯</div>
+            <h2>Ready to Begin the Session?</h2>
+            <p>Click "Start Interview" when you are ready. This will securely activate your webcam and microphone, load
+                the technical questions, and initialize the forensic monitoring engine.</p>
+
+            <div class="pill-container">
+                <div class="status-pill">📷 Camera Off</div>
+                <div class="status-pill">🎤 Mic Off</div>
+                <div class="status-pill">🛡️ Monitoring Suspended</div>
+            </div>
+
+            <button id="startBtn">▶ Start Interview Session</button>
+        </div>
+
+        <!-- STATE 2: ACTIVE INTERVIEW -->
+        <main id="interviewScreen" class="main-content">
+
+            <!-- LEFT COLUMN: Q&A and Video -->
+            <section class="video-section">
+                <!-- Video Container -->
+                <div class="video-container">
+                    <video id="webcam-video" autoplay playsinline muted></video>
+                    <canvas id="capture-canvas" style="display:none;"></canvas>
+                    <div class="overlay-ui" id="live-indicator">
+                        <span class="dot live"></span> Live Feed
+                    </div>
+                </div>
+
+                <!-- Q&A Container -->
+                <div class="qa-section">
+                    <div class="question-header">
+                        <span class="q-badge" id="qCategory">System</span>
+                        <span class="q-badge level" id="qDifficulty">Dynamic</span>
+                    </div>
+
+                    <h3 id="questionText">Initializing intelligence engine...</h3>
+
+                    <div id="speechOutput" class="speech-output">
+                        <em style="color:#6b7280;">Your verbal response will be transcribed here in real-time...</em>
+                    </div>
+
+                    <div class="speech-controls">
+                        <button id="startSpeechBtn">🎙️ Start Speaking</button>
+                        <button id="stopSpeechBtn" disabled>⏹ Stop</button>
+                        <button id="submitAnswerBtn" disabled>Submit Answer →</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN: Metrics & Anomalies -->
+            <section class="metrics-section">
+
+                <!-- Trust / Confidence Score -->
+                <div class="metric-card primary-card">
+                    <h2>Live Behavioral Confidence</h2>
+                    <div class="score-display" id="confidenceScore" style="margin-bottom: 0.5rem;">100%</div>
+
+                    <!-- Analog Bar -->
+                    <div class="progress-bar"
+                        style="margin-bottom: 1rem; width: 100%; max-width: 200px; background: rgba(255, 255, 255, 0.1);">
+                        <div class="fill" id="confidenceBar"
+                            style="width: 100%; transition: width 0.3s, background-color 0.3s; background: var(--success-color);">
+                        </div>
+                    </div>
+
+                    <div class="card-desc">Forensic Engine State</div>
+                </div>
+
+                <!-- Live Cheating Logs -->
+                <div class="cheating-log-card" id="cheatingEvents" style="display: none;">
+                    <h3>Security & Anomaly Logs</h3>
+                    <ul id="cheatingList">
+                        <!-- Filled dynamically -->
+                    </ul>
+                </div>
+
+                <!-- End Session -->
+                <div class="end-interview-wrapper">
+                    <button id="endSessionBtn" class="btn">🛑 Force Complete Session</button>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/static/js/interview.js"></script>
+</body>
+
+</html>

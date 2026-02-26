@@ -1,4 +1,7 @@
 import os
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
 import time
 import logging
 import concurrent.futures
@@ -13,7 +16,7 @@ import json
 import candidate_db
 from compare_engine import compare_profiles
 import compare_ai_engine
-from ai_consensus_engine import groq_client, safe_groq_call
+from ai_consensus_engine import groq_client, gemini_client, safe_groq_call
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
@@ -34,6 +37,15 @@ from ai_consensus_engine import (
     generate_github_deep_analysis,
     generate_structured_forensic_analysis,
 )
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'web cam'))
+from interview_engine import InterviewEngine
+from session_storage import save_session, load_session
+import uuid
+
+# In-memory storage for active sessions
+active_sessions = {}
 
 load_dotenv()
 
@@ -85,6 +97,10 @@ def health():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 404
 
 @app.route('/report/hash/<string:resume_hash>')
 def report_by_hash(resume_hash):
@@ -225,13 +241,13 @@ def scan_resume():
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
             domain_future = executor.submit(classify_domain, raw_text)
-            domain = safe_future(domain_future, timeout=15, fallback=domain_fallback)
+            domain = safe_future(domain_future, timeout=30, fallback=domain_fallback)
 
             extract_future = executor.submit(extract_entities, raw_text, domain)
-            entities = safe_future(extract_future, timeout=30, fallback=entity_fallback)
+            entities = safe_future(extract_future, timeout=90, fallback=entity_fallback)
 
             verif_future = executor.submit(verify_external_evidence, entities, domain)
-            verification = safe_future(verif_future, timeout=20, fallback=verif_fallback)
+            verification = safe_future(verif_future, timeout=45, fallback=verif_fallback)
 
         # ── Stage 3: ML Feature Extraction + Scoring ────────────────────────
         log.info("STAGE 3 — ML Feature Extraction + Scoring")
@@ -325,10 +341,17 @@ def scan_resume():
         c_domain = domain.get("domain", "General")
 
         # Use ml_composite reliability as the canonical trust score (blends ML + evidence quality)
-        trust_score  = ml_composite["reliability_index"]
+        trust_score  = float(ml_composite.get("reliability_index", 50.0))
         evidence_str = intelligence.get("core_metrics", {}).get("evidence_strength", "Unknown")
-        final_score  = round((trust_score + max(0, 100 - fraud_probability)) / 2, 2)
-        risk_label   = ml_composite["risk_label"]
+        
+        # Safe score calculation
+        try:
+            safe_fraud = float(fraud_probability) if fraud_probability is not None else 50.0
+            final_score = round((trust_score + max(0.0, 100.0 - safe_fraud)) / 2, 2)
+        except (TypeError, ValueError):
+            final_score = trust_score
+            
+        risk_label   = ml_composite.get("risk_label", "Unknown")
 
         # AI forensic analysis receives the pre-computed ML composite and deterministic flags
         ai_forensics = generate_structured_forensic_analysis(
@@ -418,7 +441,8 @@ def scan_resume():
 
         return "processed"
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=min(4, len(file_datas) or 1)) as executor:
+    # Reduced workers to 2 to prevent rapid 429 rate-limiting from Groq
+    with concurrent.futures.ThreadPoolExecutor(max_workers=min(2, len(file_datas) or 1)) as executor:
         results = list(executor.map(_process_file, file_datas))
     
     for res in results:
@@ -546,9 +570,10 @@ def run_compare():
         }
     }
 
-    # Run AI Consensus Comparison (Groq)
+    # Run AI Consensus Comparison (Groq + Gemini)
     consensus_result = compare_ai_engine.run_consensus_comparison(
         groq_client=groq_client,
+        gemini_client=gemini_client,
         safe_groq_call=safe_groq_call,
         log=log,
         comparison_data=payload
@@ -607,6 +632,168 @@ def demo_scan():
     return jsonify({"success": True, "data": demo_report, "meta": demo_report["meta"]})
 
 
+# ── Web Cam Live Interaction Routes ──────────────────────────────────────
+
+@app.route('/interview/<candidate_hash>')
+def interview(candidate_hash):
+    return render_template('interview.html', candidate_hash=candidate_hash)
+
+@app.route('/start_session', methods=['POST'])
+def start_session():
+    data = request.json
+    candidate_hash = data.get('candidate_hash', str(uuid.uuid4()))
+    active_sessions[candidate_hash] = InterviewEngine(candidate_hash)
+    return jsonify({"status": "success", "candidate_hash": candidate_hash})
+
+@app.route('/process_frame', methods=['POST'])
+def process_frame():
+    data = request.json
+    candidate_hash = data.get('candidate_hash')
+    image_b64 = data.get('image')
+    engine = active_sessions.get(candidate_hash)
+    if not engine or not image_b64:
+        return jsonify({"error": "Invalid session or missing image"}), 400
+    metrics = engine.process_frame(image_b64)
+    return jsonify(metrics)
+
+@app.route('/cheating_event', methods=['POST'])
+def cheating_event():
+    data = request.json
+    candidate_hash = data.get('candidate_hash')
+    event_type = data.get('event_type')
+    engine = active_sessions.get(candidate_hash)
+    if not engine or not event_type:
+        return jsonify({"error": "Invalid session or missing event"}), 400
+    engine.log_cheating_event(event_type)
+    return jsonify({"status": "logged"})
+
+@app.route('/load_questions/', defaults={'pattern': ''}, methods=['GET'])
+@app.route('/load_questions/<pattern>', methods=['GET'])
+def load_questions_api(pattern):
+    import glob
+    q_dir = os.path.join(app.root_path, 'web cam', 'questions')
+    if not os.path.exists(q_dir):
+        q_dir = os.path.join(app.root_path, 'questions') # Fallback if merged
+    files = glob.glob(os.path.join(q_dir, f"*{pattern}*.json"))
+    questions = []
+    for f in files:
+        try:
+            with open(f, 'r') as q_file:
+                questions.append(json.load(q_file))
+        except Exception as e:
+            print(f"Error loading {f}: {e}")
+    questions.sort(key=lambda item: item.get("id", ""))
+    return jsonify(questions)
+
+@app.route('/submit_answer', methods=['POST'])
+def submit_answer():
+    data = request.json
+    candidate_hash = data.get('candidate_hash')
+    question = data.get('question')
+    answer = data.get('answer')
+    engine = active_sessions.get(candidate_hash)
+    if not engine:
+        return jsonify({"error": "Invalid session"}), 400
+    metrics = engine.get_current_metrics()
+    from answer_evaluator import AnswerEvaluator
+    evaluator = AnswerEvaluator()
+    eval_result = evaluator.evaluate(question, answer, metrics)
+    engine.log_evaluated_answer({
+        "question": question,
+        "answer": answer,
+        "evaluation": eval_result
+    })
+    return jsonify(eval_result)
+
+@app.route('/get_metrics', methods=['GET'])
+def get_metrics():
+    candidate_hash = request.args.get('candidate_hash')
+    engine = active_sessions.get(candidate_hash)
+    if not engine:
+        return jsonify({"error": "Invalid session"}), 400
+    return jsonify(engine.get_current_metrics())
+
+@app.route('/end_session', methods=['POST'])
+def end_session_api():
+    data = request.json
+    candidate_hash = data.get('candidate_hash')
+    engine = active_sessions.get(candidate_hash)
+    if not engine:
+        return jsonify({"error": "Invalid session"}), 400
+    summary = engine.finalize_session()
+    save_session(candidate_hash, summary)
+    if candidate_hash in active_sessions:
+        del active_sessions[candidate_hash]
+    return jsonify({"status": "success", "summary": summary})
+
+@app.route('/session_summary/<candidate_hash>')
+def session_summary_view(candidate_hash):
+    summary = load_session(candidate_hash)
+    if not summary:
+        return "Session not found", 404
+    return render_template('session_complete.html', summary=summary, candidate_hash=candidate_hash)
+
+@app.route("/save_interview_results", methods=["POST"])
+def save_interview_results():
+    payload = request.json
+    candidate_hash = payload.get("candidate_hash")
+    results = payload.get("interview_results", {})
+
+    import candidate_db as db
+    candidate = db.get_candidate_by_hash(candidate_hash)
+    if not candidate:
+        return jsonify({"error": "Not Found"}), 404
+
+    # Map engine metrics to user's requested schema
+    live_integrity = results.get("integrity_index", 50.0)
+    speech_score = results.get("answer_quality", 50.0)
+    # Fraud Risk scaled based on anomaly points logic inside engine
+    fraud_risk = min(100, results.get("anomaly_points", 0) * 5)
+    
+    anomalies_list = results.get("cheating_flags", [])
+    anomalies_count = len(anomalies_list) if isinstance(anomalies_list, list) else results.get("anomaly_points", 0)
+
+    mapped_results = {
+        "integrity_score": live_integrity,
+        "fraud_risk": fraud_risk,
+        "speech_score": speech_score,
+        "anomalies": anomalies_count,
+        "raw_engine_data": results
+    }
+
+    forensic = candidate.get("forensic_payload", {})
+    forensic["connect_results"] = mapped_results
+    forensic["connect_timestamp"] = datetime.now().isoformat()
+
+    scores = forensic.get("scores", {})
+    resume_reliability = scores.get("reliability", 50.0)
+
+    # 50% resume_reliability + 30% live_integrity + 20% speech_reliability
+    final_combined_score = (0.5 * resume_reliability) + (0.3 * live_integrity) + (0.2 * speech_score)
+
+    try:
+        from ai_consensus_engine import generate_live_forensic_narrative
+        # Pass resume text if available, or empty string
+        resume_text = candidate.get("forensic_payload", {}).get("resume_text", "")
+        synthesis = generate_live_forensic_narrative(resume_text=resume_text)
+    except Exception:
+        synthesis = {
+            "resume_reliability": resume_reliability,
+            "behavioral_integrity": live_integrity,
+            "fraud_risk": fraud_risk,
+            "hiring_recommendation": "Hire" if final_combined_score >= 70 else ("Review" if final_combined_score >= 40 else "Reject")
+        }
+
+    forensic["final_synthesis"] = synthesis
+    
+    candidate["final_score"] = round(final_combined_score, 2)
+    candidate["forensic_payload"] = forensic
+    
+    db.update_candidate(candidate)
+
+    return jsonify({"status": "saved"})
+
+
 if __name__ == '__main__':
     log.info("Starting The Honest Recruiter on port 5000")
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000, use_reloader=False)

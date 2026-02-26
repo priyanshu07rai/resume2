@@ -41,8 +41,7 @@ import re
 
 log = logging.getLogger("HonestRecruiter.Resilience")
 
-# ── Module-level lock for Groq (rate limit protection) ────────────────────────
-_groq_lock = threading.Lock()
+# ── Concurrency management (removed lock to prevent bottlenecks) ────────────────
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -127,8 +126,7 @@ def repair_json(raw: str, groq_client, required_keys: list,
 
     try:
         def _call():
-            with _groq_lock:
-                return groq_client.chat.completions.create(
+            return groq_client.chat.completions.create(
                     model="llama-3.1-8b-instant",   # Fast, cheap repair model
                     messages=[{"role": "user", "content": repair_prompt}],
                     response_format={"type": "json_object"},
@@ -160,15 +158,15 @@ def _groq_call_once(groq_client, model: str, messages: list,
     Returns raw content string or None.
     """
     def _call():
-        with _groq_lock:
-            time.sleep(0.2)   # minimal inter-request pacing
-            return groq_client.chat.completions.create(
-                model=model,
-                messages=messages,
-                response_format={"type": "json_object"},
-                temperature=temperature,
-                max_tokens=max_tokens,
-            )
+        # Serialized access removed to prevent bottlenecks
+        time.sleep(0.05)
+        return groq_client.chat.completions.create(
+            model=model,
+            messages=messages,
+            response_format={"type": "json_object"},
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
         future = ex.submit(_call)
@@ -220,14 +218,19 @@ def _groq_with_backoff(groq_client, model: str, messages: list,
             err = str(e).lower()
             is_rate_limit = any(x in err for x in ["rate_limit", "429", "overloaded", "quota"])
             if is_rate_limit:
-                delay = (2 ** attempt) + (time.time() % 1.0)  # exp backoff + jitter
+                delay = (4 ** attempt) + (time.time() % 2.0)  # exp backoff + jitter
+                # Try to extract exact wait time from Groq error message
+                match = re.search(r"try again in ([\d\.]+)s", err)
+                if match:
+                    delay = float(match.group(1)) + 1.5 # add 1.5s buffer
+                    
                 log.warning("Groq 429/rate-limit. Backoff %.1fs (attempt %d/%d)",
                             delay, attempt + 1, max_retries)
                 time.sleep(delay)
             else:
                 log.error("Groq error (attempt %d): %s", attempt + 1, e)
                 # For non-rate-limit errors, shorter fixed wait
-                time.sleep(1.0)
+                time.sleep(2.0)
 
     # Last resort: try JSON repair on whatever we have
     if last_raw and attempt_repair:
@@ -257,15 +260,30 @@ def _gemini_call(gemini_client, system_prompt: str, user_prompt: str,
     def _call():
         try:
             # Try google.genai SDK (newer)
-            response = gemini_client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=full_prompt,
-            )
-            return response.text
+            # Try common model names in order of preference
+            for model_name in ["gemini-1.5-flash", "gemini-2.0-flash", "models/gemini-1.5-flash"]:
+                try:
+                    response = gemini_client.models.generate_content(
+                        model=model_name,
+                        contents=full_prompt,
+                    )
+                    return response.text
+                except Exception as inner_e:
+                    if "404" not in str(inner_e):
+                        # If it's not a 404 (e.g. 429), don't bother trying other models
+                        raise inner_e
+            raise RuntimeError("No valid Gemini model found")
         except AttributeError:
             # Fall back to older google-generativeai SDK
-            response = gemini_client.generate_content(full_prompt)
-            return response.text
+            # The older SDK usually requires the 'models/' prefix
+            for model_name in ["models/gemini-1.5-flash", "gemini-1.5-flash"]:
+                try:
+                    response = gemini_client.generate_content(full_prompt)
+                    return response.text
+                except Exception as inner_e:
+                    if "404" not in str(inner_e):
+                        raise inner_e
+            raise RuntimeError("No valid Gemini model found (legacy SDK)")
 
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
@@ -424,13 +442,16 @@ def safe_groq_call(func, *args, **kwargs):
         except Exception as e:
             err = str(e).lower()
             is_rate_limit = any(x in err for x in ["rate_limit", "429", "overloaded", "quota"])
-            delay = (2 ** attempt) + (time.time() % 1.0)
+            delay = (4 ** attempt) + (time.time() % 2.0)
             if is_rate_limit:
+                match = re.search(r"try again in ([\d\.]+)s", err)
+                if match:
+                    delay = float(match.group(1)) + 1.5
                 log.warning("Groq 429. Backoff %.1fs (attempt %d/%d)", delay, attempt + 1, max_retries)
                 time.sleep(delay)
             else:
                 log.error("Groq API error (attempt %d): %s", attempt + 1, e)
-                time.sleep(min(delay, 3.0))
+                time.sleep(min(delay, 5.0))
 
     log.error("safe_groq_call exhausted %d retries.", max_retries)
     return None

@@ -53,7 +53,8 @@ def predict_resume_category(raw_text: str) -> str:
         return "General"
     try:
         X = vectorizer.transform([raw_text])
-        return str(resume_model.predict(X)[0])
+        with joblib.parallel_backend("threading", n_jobs=1):
+            return str(resume_model.predict(X)[0])
     except Exception as e:
         log.error("predict_resume_category failed: %s", e)
         return "General"
@@ -180,11 +181,12 @@ def predict_fraud_probability(data: dict) -> float:
                 "email_score":        features["email_score"],
             }])
 
-            if hasattr(fraud_model, "predict_proba"):
-                prob = fraud_model.predict_proba(X)[0][1] * 100
-            else:
-                # For models without predict_proba (e.g. LinearSVC)
-                decision = fraud_model.decision_function(X)[0]
+            with joblib.parallel_backend("threading", n_jobs=1):
+                if hasattr(fraud_model, "predict_proba"):
+                    prob = fraud_model.predict_proba(X)[0][1] * 100
+                else:
+                    # For models without predict_proba (e.g. LinearSVC)
+                    decision = fraud_model.decision_function(X)[0]
                 # Sigmoid calibration
                 import math
                 prob = 100.0 / (1.0 + math.exp(-decision))

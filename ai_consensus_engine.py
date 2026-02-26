@@ -661,6 +661,7 @@ STRICT RULES:
 - Every observation must cite specific data: dates, counts, scores, or skill names.
 - Avoid HR language. Think like a financial auditor, not a recruiter.
 - If ML signals diverge from the resume narrative, call it out explicitly.
+- NEVER use the word "Unknown" for any rating or verdict. If data is missing, make a best-effort forensic judgment based on available ML signals.
 
 Return ONLY valid JSON with this EXACT schema. No text outside JSON:
 
@@ -670,11 +671,11 @@ Return ONLY valid JSON with this EXACT schema. No text outside JSON:
     "string: narrative line 2 based on evidence..."
   ],
   "digital_maturity": {
-    "rating": "Adequate | Weak | Strong | Unknown",
+    "rating": "Adequate | Weak | Strong",
     "verified_platform_signals": "number: count of external links/repos"
   },
   "internal_coherence": {
-    "rating": "High Coherence | Moderate Coherence | Low Coherence | Unknown",
+    "rating": "High Coherence | Moderate Coherence | Low Coherence",
     "score": "number 0-100"
   },
   "verification_signals": [
@@ -686,9 +687,9 @@ Return ONLY valid JSON with this EXACT schema. No text outside JSON:
     }
   ],
   "summary_snapshot": {
-    "overall_risk_level": "Low | Moderate | High | Unknown",
-    "capability_certainty": "Low | Moderate | High | Unknown",
-    "digital_depth_rating": "Weak | Adequate | Strong | Unknown",
+    "overall_risk_level": "Low | Moderate | High",
+    "capability_certainty": "Low | Moderate | High",
+    "digital_depth_rating": "Weak | Adequate | Strong",
     "recommended_action": "string: e.g. Technical Interview Required"
   },
   "full_verdict": "string: a long cohesive paragraph detailing the complete forensic analysis of the digital footprint and timeline"
@@ -747,17 +748,22 @@ def _deterministic_forensic_fallback(fraud_probability: float, trust_score: floa
     else:
         risk = "High"
 
+    # Heuristic ratings for UI instead of "Unknown"
+    maturity_rating = "Adequate" if trust_score > 65 else ("Weak" if trust_score < 40 else "Moderate")
+    coherence_rating = "High Coherence" if trust_score > 75 else ("Low Coherence" if trust_score < 30 else "Moderate Coherence")
+    
     return {
         "verdict_lines": [
             f"Deterministic fallback activated.",
-            f"Calculated fraud probability: {fraud_probability}% | Trust Score: {trust_score}%"
+            f"Calculated fraud probability: {fraud_probability}% | Trust Score: {trust_score}%",
+            f"AI engines (Groq/Gemini) currently rate-limited; showing deterministic ML scan results."
         ],
         "digital_maturity": {
-            "rating": "Unknown",
+            "rating": maturity_rating,
             "verified_platform_signals": 0
         },
         "internal_coherence": {
-            "rating": "Unknown",
+            "rating": coherence_rating,
             "score": round(trust_score)
         },
         "verification_signals": [
@@ -766,14 +772,20 @@ def _deterministic_forensic_fallback(fraud_probability: float, trust_score: floa
                 "source": "deterministic_engine",
                 "impact": "Positive" if trust_score > 60 else "Negative",
                 "severity": "Moderate"
+            },
+            {
+                "signal": "AI Deep-Dive skipped due to API rate limits",
+                "source": "system_guard",
+                "impact": "Negative",
+                "severity": "Low"
             }
         ],
         "summary_snapshot": {
             "overall_risk_level": risk,
-            "capability_certainty": "Unknown",
-            "digital_depth_rating": "Unknown",
-            "recommended_action": "Standard Screening" if risk == "Low" else "Thorough Verification Required"
+            "capability_certainty": "Moderate" if trust_score > 50 else "Low",
+            "digital_depth_rating": maturity_rating,
+            "recommended_action": "Technical Interview Required" if risk != "Low" else "Standard Screening"
         },
-        "full_verdict": f"The AI analysis engine timed out or was unavailable. This is a deterministic report based on numerical scoring. Trust Index is {round(trust_score)}% and Fraud Probability is {fraud_probability}%.",
+        "full_verdict": f"The AI analysis engine timed out or was unavailable due to API rate limits. This is a deterministic report based on numerical scoring. Trust Index is {round(trust_score)}% and Fraud Probability is {fraud_probability}%. Technical validation via live interaction is recommended to confirm these ML predictions.",
         "ai_status": "deterministic_fallback"
     }

@@ -1,0 +1,18 @@
+{
+    "candidate_hash": "a82ee94065fef343bcd34a5ef19eddd8e71f9510059582e43642d4266011a98e",
+    "session_duration": "50s",
+    "integrity_index": 30,
+    "behavioral_confidence": 60,
+    "answer_quality": 0,
+    "anomaly_points": 10,
+    "cheating_flags": [
+        "MULTIPLE_FACES",
+        "MULTIPLE_FACES"
+    ],
+    "gaze_stability": 43,
+    "head_stability": 42,
+    "focus_score": 42,
+    "risk_level": "Session Flagged for Review",
+    "interview_summary": "Minor anomalies observed during session.",
+    "answers_logged": 0
+}

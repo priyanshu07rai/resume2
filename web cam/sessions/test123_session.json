@@ -1,0 +1,25 @@
+{
+    "candidate_hash": "test123",
+    "session_duration": "58s",
+    "integrity_index": 25,
+    "behavioral_confidence": 30,
+    "answer_quality": 0,
+    "anomaly_points": 18,
+    "cheating_flags": [
+        "NO_FACE",
+        "NO_FACE",
+        "WINDOW_UNFOCUS",
+        "NO_FACE",
+        "NO_FACE",
+        "WINDOW_UNFOCUS",
+        "NO_FACE",
+        "WINDOW_UNFOCUS",
+        "NO_FACE"
+    ],
+    "gaze_stability": 27,
+    "head_stability": 27,
+    "focus_score": 27,
+    "risk_level": "Session Flagged for Review",
+    "interview_summary": "Minor anomalies observed during session.",
+    "answers_logged": 0
+}

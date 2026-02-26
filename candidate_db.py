@@ -94,6 +94,18 @@ def save_candidate(name: str, domain: str, file_hash: str, final_score: float, f
     finally:
         conn.close()
 
+def update_candidate(candidate: dict):
+    """Updates candidate using the full hydrated dictionary."""
+    file_hash = candidate.get("hash")
+    if not file_hash:
+        return
+    name = candidate.get("name", "Unknown")
+    domain = candidate.get("domain", "Unknown")
+    final_score = candidate.get("final_score", 0.0)
+    forensic_payload = candidate.get("forensic_payload", {})
+    
+    save_candidate(name, domain, file_hash, final_score, forensic_payload)
+
 def get_all_candidates():
     """Returns all candidates sorted by final_score descending."""
     conn = _get_connection()
@@ -122,7 +134,17 @@ def get_all_candidates():
             else 'High'
         )
         cand['insights'] = payload.get("deterministic_insights", [])
+        
+        old_score = scores.get("final_score", cand.get("final_score", 0.0))
+        if old_score < 0:
+            cand["final_score"] = round((cand["reliability"] + max(0.0, 100.0 - cand["fraud_score"])) / 2.0, 2)
+        else:
+            cand["final_score"] = old_score
+            
         candidates.append(cand)
+    
+    # Re-sort candidates gracefully just in case loaded payloads modified the score
+    candidates.sort(key=lambda x: x["final_score"], reverse=True)
     return candidates
 
 def get_candidate_by_id(candidate_id: int):
@@ -168,7 +190,13 @@ def _hydrate(row):
     cand["reliability"]  = scores.get("reliability", 50.0)
     cand["fraud_score"]  = scores.get("fraud_score", 50.0)
     cand["risk"]         = scores.get("risk_level", "Unknown")
-    cand["final_score"]  = scores.get("final_score", cand.get("final_score", 0.0))
+    
+    # Backwards compatibility fix for older resumes that had final_score = trust - fraud (which can be negative)
+    old_score = scores.get("final_score", cand.get("final_score", 0.0))
+    if old_score < 0:
+        cand["final_score"] = round((cand["reliability"] + max(0.0, 100.0 - cand["fraud_score"])) / 2.0, 2)
+    else:
+        cand["final_score"] = old_score
 
     # ── Flatten candidate profile ───────────────────────────────────────────────
     candidate_info = payload.get("candidate", {})

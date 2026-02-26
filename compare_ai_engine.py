@@ -83,7 +83,7 @@ def extract_verdict(ai_result: dict) -> str:
     if "CANDIDATE B" in rec or rec == "B": return "B"
     return "Unclear"
 
-def synthesize_final_decision(groq_client, log, data, result_a, result_b, final_verdict) -> list:
+def synthesize_final_decision(groq_client, gemini_client, log, data, result_a, result_b, final_verdict) -> list:
     """Synthesizes the final output bullet points via structured JSON."""
     if not groq_client: return ["Analysis failed."]
     
@@ -121,17 +121,30 @@ Exact JSON schema required:
             schema_keys=["final_bullets"],
             groq_client=groq_client,
             groq_model="llama-3.3-70b-versatile",
+            gemini_client=gemini_client,
             timeout_sec=15.0,
             max_retries=2
         )
         bullets = res.get("final_bullets", [])
-        if not bullets: return ["Synthesis parsed but empty."]
+        if not bullets: raise ValueError("Empty bullets from AI")
         return bullets
     except Exception as e:
-        log.error("Synthesis error: %s", e)
-        return ["Synthesis failure."]
+        log.error("Synthesis error or empty: %s", e)
+        # Deterministic Fallback Synthesis
+        metrics = data.get('comparison_metrics', {})
+        rel_diff = metrics.get('reliability_diff', 0)
+        fraud_diff = metrics.get('fraud_diff', 0)
+        winner = "A" if rel_diff > 0 else "B"
+        
+        return [
+            f"Deterministic analysis identifies Candidate {winner} as the stronger baseline profile.",
+            f"Reliability delta of {abs(rel_diff)}% favors Candidate {winner}.",
+            f"Fraud risk variance is {abs(fraud_diff)}% between profiles.",
+            "AI-driven semantic synthesis is currently unavailable; ratings are based on primary ML features.",
+            f"Recommendation: Proceed with Candidate {winner} for technical deep-dive."
+        ]
 
-def run_consensus_comparison(groq_client, safe_groq_call, log, comparison_data: dict):
+def run_consensus_comparison(groq_client, gemini_client, safe_groq_call, log, comparison_data: dict):
     """Orchestrates the multi-model consensus layer using structured JSON."""
     
     log.info("Starting AI Consensus Protocol...")
@@ -157,7 +170,7 @@ def run_consensus_comparison(groq_client, safe_groq_call, log, comparison_data: 
     log.info(f"Final Consensus: Candidate {final_verdict} (Confidence: {confidence}%)")
         
     # 4. Synthesize Final Report
-    bullets = synthesize_final_decision(groq_client, log, comparison_data, result_a, result_b, final_verdict)
+    bullets = synthesize_final_decision(groq_client, gemini_client, log, comparison_data, result_a, result_b, final_verdict)
     
     return {
         "final_bullets": bullets,

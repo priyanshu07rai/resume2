@@ -18,6 +18,10 @@ Built for high-trust hiring, it identifies buzzword stuffing, timeline gaps, ide
     *   **Career Stage Engine**: Calibrates expectations based on whether the candidate is a Fresher or Executive.
     *   **Proportionality Engine**: Flags "high-intensity claims" (e.g., "AI Expert") that lack supporting project evidence.
     *   **Anomaly Engine**: Detects date overlaps, rapid title escalation, and AI-generated language patterns.
+5.  **Live Interaction Engine (Webcam Forensics)**:
+    *   **Real-time Behavioral Tracking**: Monitors gaze, head stability, and eye focus using computer vision to track suspicious behavior.
+    *   **Continuous Fraud Detection**: Flags cheating events like tab switching, window losing focus, multiple faces, or no face detected.
+    *   **Semantic Speech Audio Evaluation**: Synthesizes speech response coherence and matching directly into the final reliability score.
 
 ---
 
@@ -69,7 +73,9 @@ The server will start at `http://localhost:5000`.
 
 *   `POST /scan`: Standardized orchestrator. Upload a PDF to trigger the full forensic audit.
 *   `GET /scan/demo`: **Hackathon Demo Mode**. Returns a complete pre-verified forensic response (no API keys required).
-*   `GET /report`: Frontend view for the generated forensic audit report.
+*   `GET /report/<hash>`: Forensic audit report view for the parsed candidate.
+*   `GET /interview/<hash>`: Immersive live AI interview interface capturing webcam behavior and spoken answers.
+*   `POST /save_interview_results`: Syncs deep-integrity behavioral logs into the main resume database for a hybrid final score calculation.
 
 ---
 

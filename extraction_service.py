@@ -50,9 +50,9 @@ def extract_entities(text, domain_info):
             "education": ai_data.get("education", []),
             "certifications": ai_data.get("certifications", []),
             "extraction_meta": {
-                "consensus_score": consensus["consensus_score"],
-                "models_used": consensus["models_used"],
-                "disagreements": consensus["disagreements"]
+                "consensus_score": consensus.get("consensus_score", 0),
+                "models_used": consensus.get("models_used", []),
+                "disagreements": consensus.get("disagreements", [])
             }
         }
     except Exception as e:

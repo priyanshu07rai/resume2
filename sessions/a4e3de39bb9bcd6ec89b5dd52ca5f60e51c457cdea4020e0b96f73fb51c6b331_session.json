@@ -1,0 +1,17 @@
+{
+    "candidate_hash": "a4e3de39bb9bcd6ec89b5dd52ca5f60e51c457cdea4020e0b96f73fb51c6b331",
+    "session_duration": "43s",
+    "integrity_index": 54,
+    "behavioral_confidence": 80,
+    "answer_quality": 0,
+    "anomaly_points": 2,
+    "cheating_flags": [
+        "NO_FACE"
+    ],
+    "gaze_stability": 71,
+    "head_stability": 72,
+    "focus_score": 71,
+    "risk_level": "Session Completed",
+    "interview_summary": "Stable behavior with strong answer reliability.",
+    "answers_logged": 0
+}

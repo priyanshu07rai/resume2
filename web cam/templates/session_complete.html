@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Complete | Interview Forensics</title>
+    <link rel="stylesheet" href="/static/css/interview.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="results-body">
+    <div class="dashboard results-dashboard">
+        <header class="header complete-header">
+            <div>
+                <h1>Session Finalized</h1>
+                <p class="subtitle">Behavioral Forensics Output</p>
+            </div>
+            <div class="session-info">Candidate Hash: {{ candidate_hash }}</div>
+        </header>
+
+        <main class="main-content center-content">
+            <div class="summary-card">
+                <div class="result-header">
+                    <h2>Behavioral Metric Report</h2>
+                    <span class="risk-badge risk-{{ summary.risk_level|lower }}">{{ summary.risk_level }} Risk</span>
+                </div>
+
+                <div class="result-grid">
+                    <div class="result-item primary-result">
+                        <span class="label">Interview Integrity Index</span>
+                        <span class="value giant">{{ summary.integrity_index }}/100</span>
+                    </div>
+                </div>
+
+                <div class="metric-breakdown">
+                    <div class="breakdown-item">
+                        <span class="b-label">Behavior Confidence</span>
+                        <span class="b-val">{{ summary.behavioral_confidence }}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="b-label">Answer Reliability</span>
+                        <span class="b-val">{{ summary.answer_quality }}</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="b-label">Anomaly Rating</span>
+                        <span class="b-val">{{ summary.anomaly_points }} / 10pts</span>
+                    </div>
+                </div>
+
+                <div class="anomalies">
+                    <h3>Anomaly Event History</h3>
+                    {% if summary.cheating_flags %}
+                    <ul class="badge-list">
+                        {% for flag in summary.cheating_flags %}
+                        <li class="badge anomaly-badge">{{ flag }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="clean-record">No anomalies recorded during session.</p>
+                    {% endif %}
+                </div>
+
+                <div class="summary-text-box">
+                    <strong>AI Synthesis:</strong> {{ summary.interview_summary }}
+                </div>
+
+                <div class="raw-json">
+                    <h3>JSON Output Storage</h3>
+                    <pre><code>{{ summary | tojson(indent=2) }}</code></pre>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
